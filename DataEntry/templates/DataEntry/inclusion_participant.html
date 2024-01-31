@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+
+{% block title %}Inclusion / Exclusion Criteria{% endblock %}
+
+{% block head %}
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+
+  #reciva_entry {
+      padding-bottom: 10px;
+  }
+  .tab-content input[type="checkbox"] {
+  width: 15px;
+  margin-right: 15px;  
+  }
+  .short-entry-box{
+      width: 100px; 
+  }
+  .line-through{
+      border-bottom: 1px solid black;
+      padding-bottom: 10px;
+  }
+  .form-row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;   
+      margin-bottom: 15px;
+  }
+
+  .short-entry-box{
+      width: 100px; 
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+  <div id="main">
+    <div id="lab_processing" class="dataentry">
+      <h1>Inclusion / Exclusion Criteria</h1>
+      <div id="inclusionFormContainer">
+        <form method="POST" id="pdf-form">
+          {% csrf_token %}
+          <input type="hidden" name="participant_num" value="{{ participant_id }}">
+          <div class="criteria mb-12 max-w-4xl form-grid full-rows">
+            <div class="field field-inline spaced">
+              <label class="label-class" for="id_inclusion_criteria_1">1. Are you between the ages of 50 - 80?</label>
+              <div class="input input-list">
+                {{ form.inclusion_criteria_1.0 }}
+                {{ form.inclusion_criteria_1.1 }}
+              </div>
+            </div>
+            <div class="field field-inline spaced">
+              <label class="label-class" for="id_inclusion_criteria_2">2.	Have you ever been diagnosed with any types of cancer at any point in your life?  </label>                                                                                          
+              <div class="input input-list">
+                {{ form.inclusion_criteria_2.0 }}
+                {{ form.inclusion_criteria_2.1 }}
+              </div>
+            </div>
+            <div class="field field-inline spaced">
+                <label class="label-class" for="id_inclusion_criteria_3">3.	Are you currently smoker? </label>
+                <div class="input input-list">
+                  {{ form.inclusion_criteria_3.0 }}
+                  {{ form.inclusion_criteria_3.1 }}
+                </div>
+            </div>
+            <div class="field field-inline spaced">
+              <label class="label-class" for="id_inclusion_criteria_4">3a.	Are you able to abstain from smoking tobacco for 24 hours? ?</label>
+              <div class="input input-list">
+                {{ form.inclusion_criteria_4.0 }}
+                {{ form.inclusion_criteria_4.1 }}
+                </div>
+            </div>
+            <div class="field field-inline spaced">
+              <label class="label-class"for="id_inclusion_criteria_5">4.	Have you been diagnosed with a respiratory infection in the last 3 months? Were you taking antibiotics? (for any other reason) </label>
+              <div class="input input-list">
+                {{ form.inclusion_criteria_5.0 }}
+                {{ form.inclusion_criteria_5.1 }}
+                </div>
+            </div>
+            <div class="field field-inline spaced">
+              <label class="label-class"for="id_inclusion_criteria_6">5.	Are you willing to consent to the study? Are you able to consent to the study?    </label>
+              <div class="input input-list">
+                {{ form.inclusion_criteria_6.0 }}
+                {{ form.inclusion_criteria_6.1 }}
+              </div>
+            </div>
+            <div class="field field-inline spaced">
+              <label class="label-class"for="id_inclusion_criteria_7">6.	Do you have any other cancer besides lung cancer?  </label>
+              <div class="input input-list">
+                {{ form.inclusion_criteria_7.0 }}
+                {{ form.inclusion_criteria_7.1 }}
+              </div>  
+            </div>
+            <div class="field field-inline spaced">
+              <label class="label-class"for="id_inclusion_criteria_8">7.	Are you too sick to provide a breath sample?  </label>
+              <div class="input input-list">
+                {{ form.inclusion_criteria_8.0 }}
+                {{ form.inclusion_criteria_8.1 }}
+              </div>
+            </div>
+            <div class="field field-inline spaced">
+              <label class="label-class"for="id_inclusion_criteria_9">8.	Are you currently pregnant? </label>
+              <div class="input input-list">
+                {{ form.inclusion_criteria_9.0 }}
+                {{ form.inclusion_criteria_9.1 }}
+              </div>
+            </div>
+          </div>
+          <h1>Participant Status</h1>
+          <div class="form-grid !grid-cols-4">
+            <div class="field">
+              <label class="participant-status label-md" for="id_inclusion_status">Inclusion Status:</label>
+              <div class="input">{{ form.inclusion_status }}</div>
+            </div>
+            <div class="field">
+              <label class="participant-status label-md" for="id_screening_status">Screening Status:</label>
+              <div class="input">{{ form.screening_status }}</div>
+            </div>
+            <div class="field">
+              <label class="participant-status label-md" for="id_consent_status">Consent Status:</label>
+              <div class="input">{{ form.consent_status }}</div>
+            </div>
+            <div class="field">
+              <label class="participant-status label-md" for="id_participant_num">Participant Status:</label>
+              <div class="input">{{ form.participant_status }}</div>
+            </div>
+            <div class="field col-span-full bg-blue-100">
+              <label class="participant-status label-md" for="id_participant_num">Consent Form:</label>
+              <div class="input">{{form.consent_form}}</div>
+            </div>
+          </div>
+
+          {% if form.errors.consent_status %}
+          <p> class="error">{{ form.errors.consent_status }}</p>
+      {% endif %}
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          {% if message.tags == 'page-specific' %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <div class="form-footer">
+        <button type="submit" class="btn-blue" name="submit">Save</button>
+        <a type="button" id="continueButton" class="btn-green icon-next" href="{% url 'add_mandatory_questionaire' participant_id %}">Continue</a>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      var generatePdfButton = document.getElementById("generate-pdf-button");
+      var pdfForm = document.getElementById("pdf-form");
+
+      generatePdfButton.addEventListener("click", function () {
+ 
+          var formFields = pdfForm.querySelectorAll("input, textarea, select");
+          formFields.forEach(function (field) {
+              field.disabled = true;
+          });
+
+ 
+          var generatePdfFlagInput = document.createElement("input");
+          generatePdfFlagInput.type = "hidden";
+          generatePdfFlagInput.name = "generate_pdf";
+          generatePdfFlagInput.value = "True";
+          pdfForm.appendChild(generatePdfFlagInput);
+
+ 
+          pdfForm.submit();
+
+ 
+          pdfForm.removeChild(generatePdfFlagInput);
+
+  
+          formFields.forEach(function (field) {
+              field.disabled = false;
+          });
+      });
+  });
+</script>
+
+<script>
+  document.getElementById('redirectButton').addEventListener('click', function(event) {
+    event.preventDefault();  
+    var currentURL = window.location.href;
+    var match = currentURL.match(/\/(\d+)\/(?:\?submitted=True)?$/);
+
+    if (match) {
+      var number = match[1];
+      var newURL = '/DataEntry/add_mandatory_questionaire/' + number + '/';
+
+      window.location.href = newURL;
+    } else {
+      alert('Number not found in the current URL');
+    }
+  });
+</script>
+    
+<script>
+  function redirectToMandatoryQuestionaire() {
+      var targetUrl = '/DataEntry/add_mandatory_questionaire/';
+      window.location.href = targetUrl;
+  }
+  
+  document.getElementById('continueButton').addEventListener('click', redirectToMandatoryQuestionaire);
+  </script>
+        
+<script>
+  function setParticipantNum() {
+    var currentUrl = window.location.href;
+    var regex = /\/(\d{7})\/$/;
+    var match = currentUrl.match(regex);
+
+    if (match && match[1]) {
+      var participantId = match[1];
+      document.querySelector('input[name="participant_num"]').value = participantId;
+    }
+  }
+
+  window.onload = setParticipantNum;
+</script>
+{% endblock %}

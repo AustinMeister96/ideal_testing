@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+
+{% block title %}PLCO Score Calculation{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div id="main">
+    <div id="lab_processing" class="dataentry">
+        <h1>PLCO Score Calculation</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-grid max-w-xl form-grid full-rows">            
+                <div class="field field-inline spaced">
+                    <!-- Age -->
+                    <label class='label-class' id='age' for="age">Age:</label>
+                    <div class="input">
+                        {{  form.age  }}
+                    </div>
+                </div>
+                <div class="field field-inline spaced">
+                    <!-- Education  -->
+                    <label class='label-class' id='education' name="education">Education:</label>
+                    <div class="input">
+                        {{  form.education  }}
+                    </div>
+                </div>
+                
+                <div class="field field-inline spaced">
+                    <!-- BMI -->
+                    <label class='label-class' id="bmi">BMI:</label>
+                    <div class="input">
+                        {{  form.bmi  }}
+                    </div>
+                </div>
+                <div class="field field-inline spaced">
+                    <!-- COPD -->
+                    <label class='label-class' id="copd">COPD, Emphysema, or Chronic Bronchitis:</label>
+                    <div class="input input-list !justify-start">
+                        {{  form.copd.0  }}
+                        {{  form.copd.1  }}
+                    </div>
+                </div>
+                <div class="field field-inline spaced">
+                    <!-- Cancer History -->
+                    <label  class='label-class' id="cancer_history">Personal history of cancer:</label>
+                    <div class="input input-list !justify-start">
+                        {{  form.cancer_history.0  }}
+                        {{  form.cancer_history.1  }}
+                    </div>
+                </div>
+                <div class="field field-inline spaced">
+                    <!-- Lung Cancer History -->
+                    <label  class='label-class'  id="lung_cancer_history">Family history of lung cancer:</label>
+                    <div class="input input-list !justify-start">
+                        {{  form.lung_cancer_history.0  }}
+                        {{  form.lung_cancer_history.1  }}
+                    </div>
+                </div>
+                <div class="field field-inline spaced">
+                    <!-- Race -->
+                    <label class='label-class' id="race">Race:</label>
+                    <div class="input">
+                        {{  form.race  }}
+                    </div>
+                </div>
+                <div class="field field-inline spaced">
+                    <!-- Smoking Status -->
+                    <label  class='label-class' id="smoking_status">Smoking Status:</label>
+                    <div class="input input-list !justify-start">
+                        {{  form.smoking_status.0  }}
+                        {{  form.smoking_status.1  }}
+                    </div>
+                </div>
+                <div class="field field-inline spaced">
+                    <!-- Average Number of Cigarettes Smoked per Day -->
+                    <label class='label-class' id="avg_num_cigs">Average Number of Cigarettes Smoked per Day:</label>
+                    <div class="input">
+                        {{  form.avg_num_cigs_smoked_day  }}
+                    </div>
+                </div>
+                <div class="field field-inline spaced">
+                    <!-- Duration Smoked -->
+                    <label class='label-class' id="duration">Duration Smoked (years):</label>
+                    <div class="input">
+                        {{  form.duration_smoked  }}
+                    </div>
+                </div>
+                <div class="field field-inline spaced">
+                    <!-- Years Quit -->
+                    <label class='label-class' id="yrs_quit">Years Quit:</label>
+                    <div class="input">
+                        {{  form.years_quit  }}
+                    </div>
+                </div>
+            </div>
+            <div class="p-3 grid grid-cols-2 bg-blue text-white max-w-xl">
+                <strong>PLCO Score:</strong>
+                <span class="text-right" id="plco-score-display"></span>
+                <input type="hidden" id="plco_score" name="plco_score">
+            </div>
+            <div class="form-footer">
+                <input class="btn-green" type="button" value="Submit" onclick="calculatePlcoScore()">
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            calculatePlcoScore();
+        });
+    });
+</script>
+<script>
+    function calculatePlcoScore() {
+        let copd_checked = document.querySelector('input[name="copd"]:checked');
+        let cancer_history_checked = document.querySelector('input[name="cancer_history"]:checked');
+        let lung_cancer_history_checked = document.querySelector('input[name="lung_cancer_history"]:checked');
+        let smoking_status_checked = document.querySelector('input[name="smoking_status"]:checked');
+
+        //Create an object to house the calculation values;
+        var values = {
+            age: {value: document.getElementById('id_age').value, centered: 62, coefficient: 0.0778868, estimate: 0},
+            education: {value: document.getElementById('id_education').selectedIndex + 1, centered: 4, coefficient: -0.0812744, estimate: 0}, 
+            bmi: {value: parseFloat(document.getElementById('id_bmi').value), centered: 27, coefficient: -0.0274194, estimate: 0},
+            copd: {value: (copd_checked ? parseFloat(copd_checked.value) : false), centered: 0, coefficient: 0.3553063, estimate: 0},
+            cancer_history: {value: (cancer_history_checked ? parseFloat(cancer_history_checked.value) : false), centered: 0, coefficient: 0.4589971, estimate: 0},
+            lung_cancer_history: {value: (lung_cancer_history_checked ? parseFloat(lung_cancer_history_checked.value) : false), centered: 0, coefficient: 0.587185, estimate: 0},
+            race: {value: document.getElementById('id_race').value, centered: 0, coefficient: 0, estimate: 0},
+            smoking_status: {value: (smoking_status_checked ? parseFloat(smoking_status_checked.value) : false), centered: 0, coefficient: 0.2597431, estimate: 0},
+            avg_num_cigs: {value: parseFloat(document.getElementById('id_avg_num_cigs_smoked_day').value), centered: 0.097845839, coefficient: -1.822606, estimate: 0},
+            duration: {value: parseFloat(document.getElementById('id_duration_smoked').value), centered: 27, coefficient: 0.0317321, estimate: 0},
+            yrs_quit: {value: parseFloat(document.getElementById('id_years_quit').value), centered: 10, coefficient: -0.0308572, estimate: 0},
+        };
+
+        // console.log(values);
+        
+        //Calculate Estimates Based on PLCO Spreadsheet Calculations
+        values.age.estimate = (values.age.value - values.age.centered) * values.age.coefficient;
+        values.education.estimate = (values.education.value - values.education.centered) * values.education.coefficient;
+        values.bmi.estimate = (values.bmi.value - values.bmi.centered) * values.bmi.coefficient;
+        values.copd.estimate = values.copd.value * values.copd.coefficient;
+        values.cancer_history.estimate = values.cancer_history.value * values.cancer_history.coefficient;
+        values.lung_cancer_history.estimate = values.lung_cancer_history.value * values.lung_cancer_history.coefficient;
+        values.smoking_status.estimate = values.smoking_status.value * values.smoking_status.coefficient;
+        values.avg_num_cigs.estimate = (((values.avg_num_cigs.value / 10) ** -1) - 0.4021541613) * values.avg_num_cigs.coefficient;
+        values.duration.estimate = (values.duration.value - values.duration.centered) * values.duration.coefficient;
+        values.yrs_quit.estimate = (values.yrs_quit.value - values.yrs_quit.centered) * values.yrs_quit.coefficient;
+
+        //Set the race coefficient based on the race selection.
+        switch (values.race.value) {
+            case 'Black':
+                values.race.coefficient = 0.427964;
+                break;
+            case 'First Nations':
+                values.race.coefficient = 1.055978;
+                break;
+            default:
+                break;
+        }
+
+        values.race.estimate = values.race.coefficient;
+
+        var plco_score = 0;
+
+        for (const key in values) {
+            plco_score += values[key].estimate;
+        }
+
+        plco_score += -4.532506; //Model Constant
+        
+        plco_score = Math.exp(plco_score) / (1 + Math.exp(plco_score));
+
+        document.getElementById('plco_score').value = plco_score.toFixed(5);
+        document.getElementById('plco-score-display').innerText = plco_score.toFixed(5);
+    }
+</script>
+{% endblock %}

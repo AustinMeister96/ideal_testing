@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <div id="main">
+        <div id="lab_processing" class="dataentry">
+            <h1>Participant Data</h1>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Participant Number</th>
+                        <th>Inclusion</th>
+                        <th>Questionnaire A-B</th>
+                        <th>Questionnaire C</th>
+                        <th>Questionnaire D</th>
+                        <th>Exposure</th>
+                        <th>Breath Collection</th>
+                        <th>Blood Collection</th>
+                        <th>CT Scan</th>
+                        <th>Yearly Update</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in data %}
+                        <tr>
+                            <td>{{ entry.participant.participant_number }}</td>
+                            <td>
+                                {% if entry.inclusion_data %}
+                                    <a href="{% url 'add_inclusion'  %}">
+                                        <span class="text-green">&#10004;</span>
+                                    </a>
+                                {% else %}
+                                    <span class="text-red">&#10006;</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entry.questionnaire_data %}
+                                    <a href="{% url 'add_mandatory_questionaire' entry.participant.pk %}">
+                                        <span class="text-green">&#10004;</span>
+                                    </a>
+                                {% else %}
+                                    <span class="text-red">&#10006;</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entry.questionnaire_c_data %}
+                                    <a href="{% url 'add_mandatory_questionaire_c' entry.participant.pk %}">
+                                        <span class="text-green">&#10004;</span>
+                                    </a>
+                                {% else %}
+                                    <span class="text-red">&#10006;</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entry.questionnaire_d_data %}
+                                    <a href="{% url 'add_mandatory_questionaire_de' entry.participant.pk %}">
+                                        <span class="text-green">&#10004;</span>
+                                    </a>
+                                {% else %}
+                                    <span class="text-red">&#10006;</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entry.exposure_data %}
+                                    <a href="{% url 'add_exposure' entry.participant.pk %}">
+                                        <span class="text-green">&#10004;</span>
+                                    </a>
+                                {% else %}
+                                    <span class="text-red">&#10006;</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entry.breath_collection_data %}
+                                    <a href="{% url 'add_breath_collection' entry.participant.pk %}">
+                                        <span class="text-green">&#10004;</span>
+                                    </a>
+                                {% else %}
+                                    <span class="text-red">&#10006;</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entry.blood_collection_data %}
+                                    <a href="{% url 'add_blood_collection' entry.participant.pk %}">
+                                        <span class="text-green">&#10004;</span>
+                                    </a>
+                                {% else %}
+                                    <span class="text-red">&#10006;</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entry.ct_scan_data %}
+                                    <a href="{% url 'add_ct_scan' entry.participant.pk %}">
+                                        <span class="text-green">&#10004;</span>
+                                    </a>
+                                {% else %}
+                                    <span class="text-red">&#10006;</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entry.yearly_update_data %}
+                                    <a href="{% url 'add_yearly_update' entry.participant.pk %}">
+                                        <span class="text-green">&#10004;</span>
+                                    </a>
+                                {% else %}
+                                    <span class="text-red">&#10006;</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>  
+{% endblock %}

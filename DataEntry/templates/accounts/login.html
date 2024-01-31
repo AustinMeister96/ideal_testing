@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html class="h-full">
+    <head>
+        <title>Login | IDEAL</title>
+        {% load static tailwind_tags %}
+        {% tailwind_css %}
+    </head>
+    <body class="text-md font-sans bg-blue-800 h-full flex justify-center items-center">
+        <div class="login-container bg-blue max-w-[400px] text-white rounded p-10 text-center shadow-xl">
+            {% if not request.user.is_authenticated %}
+                <img class="w-2/3 h-auto logo inline-block mb-10" src="/static/ideal-logo-blue-white.png" alt="Logo">            
+                <form action="/login/" method="post">
+                    {% csrf_token %}
+                    {% if error %}
+                        <p class="bg-red text-white font-semibold mb-8 rounded-sm p-4">{{ error }}</p>
+                    {% endif %}
+                    <div class="field text-black">
+                        <div class="input">
+                            <input type="text" id="username" placeholder='Username'  name="username" style="width: 300px; padding: 15px 10px;" required><br>
+                        </div>
+                    </div>
+                    <div class="field text-black">
+                        <div class="input">
+                            <input type="password" id="password" placeholder="Password" name="password" style="width: 300px; padding: 15px 10px;" required><br>
+                        </div>
+                    </div>
+                    <div class="form-footer justify-center">
+                        <button class="btn-green" type="submit">Login</button>
+                    </div>
+                </form>
+            {% else %}
+                <p class="text-lg">You're already logged in. Would you like to <a href="/logout/" class="underline hover:no-underline">logout</a>?</p>
+            {% endif %}        
+        </div>
+    </body>
+</html>

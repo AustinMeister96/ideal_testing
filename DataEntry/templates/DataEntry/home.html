@@ -1,0 +1,20 @@
+{%extends 'base.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<h1>Search results:</h1>
+
+{% for participant in participants %}
+    <p>
+        {{ participant.first_name }} {{ participant.last_name }},
+        {{ participant.email }}
+    </p>
+{% empty %}
+    <p>No participants found</p>
+{% endfor %}
+<form action="{% url 'your_app_name:search' %}" method="get">
+    <input type="text" name="q" placeholder="Search participants...">
+    <input type="submit" value="Search">
+</form>
+{% endblock %}

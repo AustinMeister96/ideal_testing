@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block title %}Health Economics: Indirect Costs{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<div id="main">
+    <div id="lab_processing" class="dataentry">
+        <h1>Indirect Costs</h1>
+        <div class="print:hidden text-right mb-3">
+          <button onclick="window.print();" class="btn-blue btn-sm icon-print" title="Download PDF"></button>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" id='participant_number' name="participant_num" value="{{ participant_id }}">
+            <div class="form-grid !grid-cols-2">
+                <div class="field col-span-full">
+                    <label  class=initial-section-labels for="{{ form.visit_date.id_for_label }}">Visit Date</label>
+                    <div class="input">
+                        {{ form.visit_date }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class=initial-section-labels-long for="{{ form.procedure.id_for_label }}">{{ form.procedure.label }}</label>
+                    <div class="input input-list">
+                        {{form.procedure}}
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="{{form.procedure_other.id_for_label}}">Other Procedure</label>
+                    <div class="input">
+                        {{form.procedure_other}}
+                    </div>
+                </div>
+            </div>
+            <h2>YOUR PERSONAL FINANCIAL IMPLICATIONS CONCERNING YOUR BASELINE EXAM</h2>
+            <div class="form-grid">
+                <div class="form-grid !grid-cols-2 field-group field-toggler checkbox-toggler" data-input-name="missed_work" data-target-selector=".missed_work" data-visible-value="True">
+                    <div class="field col-span-full">
+                        <label class=initial-section-labels for="{{ form.missed_work.id_for_label }}">{{ form.missed_work.label}}</label>
+                        <div class="input input-list">
+                            {{ form.missed_work }}
+                        </div>
+                    </div>
+                    <div class="field missed_work">
+                        <label class=initial-section-labels for="{{ form.missed_work_hours.id_for_label }}">{{ form.missed_work_hours.label}}</label>
+                        <div class="input">
+                            {{ form.missed_work_hours }}
+                        </div>
+                    </div>
+                    <div class="field missed_work">
+                        <label class=initial-section-labels for="{{ form.affected_pay.id_for_label }}">{{ form.affected_pay.label}}</label>
+                        <div class="input input-list">
+                            {{ form.affected_pay }}
+                        </div>
+                    </div>
+                </div>
+                <div class="field col-span-full">
+                    <label>Estimate the total time you had to devote to this appointment, including transportation, waiting time, meeting with the doctor.</label>
+                    <div class="input input-group max-w-md">
+                        <div>{{form.appointment_time_hours}}<br/><small>{{form.appointment_time_hours.label}}</small></div>
+                        <div>{{form.appointment_time_minutes}}<br/><small>{{form.appointment_time_minutes.label}}</small></div>
+                    </div>
+                </div>
+                <div class="form-grid !grid-cols-2 field-group field-toggler checkbox-toggler" data-input-name="transportation" data-target-selector=".transportation" data-visible-value="private">
+                    <div class="field">
+                        <label class=initial-section-labels for="{{ form.transportation.id_for_label }}">{{ form.transportation.label}}</label>
+                        <div class="input input-list">
+                            {{ form.transportation }}
+                        </div>
+                    </div>
+                    <div class="field transportation">
+                        <label class=initial-section-labels for="{{ form.trip_distance.id_for_label }}">{{ form.trip_distance.label}}</label>
+                        <div class="input">
+                            {{ form.trip_distance }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-grid !grid-cols-5">
+                    <div class="field">
+                        <label class=initial-section-labels for="{{ form.parking_cost.id_for_label }}">{{ form.parking_cost.label}}</label>
+                        <div class="input">
+                            {{ form.parking_cost }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class=initial-section-labels for="{{ form.public_transportation_cost.id_for_label }}">{{ form.public_transportation_cost.label}}</label>
+                        <div class="input">
+                            {{ form.public_transportation_cost }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class=initial-section-labels for="{{ form.babysitter_cost.id_for_label }}">{{ form.babysitter_cost.label}}</label>
+                        <div class="input">
+                            {{ form.babysitter_cost }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class=initial-section-labels for="{{ form.other_cost.id_for_label }}">{{ form.other_cost.label}}</label>
+                        <div class="input">
+                            {{ form.other_cost }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class=initial-section-labels for="{{ form.other_costs_description.id_for_label }}">{{ form.other_costs_description.label}}</label>
+                        <div class="input">
+                            {{ form.other_costs_description }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h2>Income (all income data will be anonymized and kept entirely confidential. It will be used only by the research team)</strong></h2>
+            <div class="form-grid">
+                <div class="form-grid !grid-cols-2">
+                    <div class="field">
+                        <label for="{{ form.income.id_for_label }}">{{ form.income.label }}</label>
+                        <div class="input">
+                            {{ form.income }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="{{ form.income_household.id_for_label }}">{{ form.income_household.label }}</label>
+                        <div class="input">
+                            {{ form.income_household }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-footer">
+                <button type="submit" class="btn-blue">Save</button>
+                <a id="saveAndContinue" href="{% url 'add_indirect_costs' participant_id %}" class="btn-green icon-next">Continue</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#addRelativeButton').click(function () {
+            let formIndex = $('#id_form-TOTAL_FORMS').val();
+            let newFormHTML = $('#formsetContainer').children().last().html().replace(/__prefix__/g, formIndex);
+            let newFormDiv = $('<div class="form-row">').html(newFormHTML);
+            $('#formsetContainer').append(newFormDiv);
+            $('#id_form-TOTAL_FORMS').val(parseInt(formIndex) + 1);
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const saveAndContinueButton = document.getElementById("saveAndContinue");
+    
+      saveAndContinueButton.addEventListener("click", function (event) {
+        event.preventDefault(); 
+        const form = document.getElementById("yourFormId");
+        form.submit();
+        const linkURL = saveAndContinueButton.getAttribute("href");
+        window.location.href = linkURL;
+      });
+    });
+    </script>
+{% endblock %}

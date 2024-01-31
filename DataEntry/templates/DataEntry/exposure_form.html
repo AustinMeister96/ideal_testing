@@ -1,0 +1,736 @@
+{% extends 'base.html' %}
+
+{% block title %}Part H: Additional Occupational History{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div id="main">
+  <div id="lab_processing" class="dataentry">
+    <h1>Part H: Additional Occupational History</h1>
+    <div class="print:hidden float-right mb-3">
+      <button onclick="window.print();" class="btn-blue btn-sm icon-print" title="Download PDF"></button>
+      <a href="{% url 'add_exposure_form' participant_id %}?generate_csv=true" class="btn-blue btn-sm icon-csv" title="Download CSV"></a>
+    </div>
+    <form method="post" class="">
+      {% csrf_token %}
+      <input type="hidden" name="participant_num" value="{{ participant_id }}">
+      <h2> Job History</h2>
+      <div class="form-grid">
+        <div class="form-grid !grid-cols-3">
+          <div class="field">
+            <label class='label-tag' for="id_job_held">What was the job you held most often in your adult life?</label>
+            <div class="input">
+              {{ form2.job_held }}
+            </div>
+          </div>
+          <div class="field">
+            <label class='label-tag' for="id_job_held_industry">In what industry was this job?</label>
+            <div class="input">
+              {{ form2.job_held_industry }}
+            </div>
+          </div>
+          <div class="field">
+            <label class='label-tag' for="id_job_held_duration">For how many years did you work at this job?</label>
+            <div class="input">
+              {{ form2.job_held_duration }}
+            </div>
+          </div>
+        </div>
+        <div class="form-grid !grid-cols-3">
+          <div class="field">
+            <label class='label-tag' for="id_job_held">What was the job you held most often in your adult life?</label>
+            <div class="input">
+              {{ form2.job_held_2 }}
+            </div>
+          </div>
+          <div class="field">
+            <label class='label-tag' for="id_job_held_industry">In what industry was this job?</label>
+            <div class="input">
+              {{ form2.job_held_2_duration }}
+            </div>
+          </div>
+          <div class="field">
+            <label class='label-tag' for="id_job_held_duration">For how many years did you work at this job?</label>
+            <div class="input">
+              {{ form2.job_held_2_industry }}
+            </div>
+          </div>
+        </div>
+        <div class="form-grid !grid-cols-3">
+          <div class="field">
+            <label class='label-tag' for="id_job_held">What was the job you held most often in your adult life?</label>
+            <div class="input">
+              {{ form2.job_held_3 }}
+            </div>
+          </div>
+          <div class="field">
+            <label class='label-tag' for="id_job_held_industry">In what industry was this job?</label>
+            <div class="input">
+              {{ form2.job_held_3_duration }}
+            </div>
+          </div>
+          <div class="field">
+            <label class='label-tag' for="id_job_held_duration">For how many years did you work at this job?</label>
+            <div class="input">
+              {{ form2.job_held_3_industry }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2>The following questions refer to your PAST and CURRENT occupations and the occupational exposures you have had:</h2>
+      <div class="form-grid">
+        <div class="field col-span-full">
+          <label>1. Do you think you have had exposure to fumes, dusts, chemicals or agents that might cause cancer at work or in the environment, for example to asbestos, chromium, diesel fumes, or others for more than one year?<br/><br/>Overall, I think I had:</label>
+          <div class="input">
+            {{ form2.total_exposure }}
+          </div>
+        </div>
+      </div>
+      <h4 class="my-4"><strong><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="inline mr-2" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg> IF YOU ENTERED 2, 3, OR 4 FROM THE ABOVE QUESTION, fill in the following table.</strong></h4>
+      <div class="form-grid">
+        <div class="form-grid col-span-full form-grid-heading !grid-cols-8">
+          <div class="col-span-4">Substance</div>
+          <div class="col-span-2">Exposed to Substance?</div>
+          <div>Duration</div>
+          <div>Exposure Age</div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Asbestos (all forms) ie; ship building, construction etc.</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.asbestos_exposure.0 }}{{ form2.asbestos_exposure.1 }}{{ form2.asbestos_exposure.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.asbestos_exposure_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.asbestos_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Silica dust, crystalline silica dust, ie; sand blasting, mining, etc.</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.silica_exposure.0 }}{{ form2.silica_exposure.1 }}{{ form2.silica_exposure.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.silica_exposure_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.silica_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Diesel engine exhaust, ie; heavy mechanics, transportation industry, etc.</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.diesel.0 }}{{ form2.diesel.1 }}{{ form2.diesel.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.diesel_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.diesel_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Radon, radon-222 and its decay products, ie; underground mining, water treatment facilities, etc.</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.radon.0 }}{{ form2.radon.1 }}{{ form2.radon.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.radon_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.radon_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Cadmium and cadmium compounds, ie; manufacturing metals or plastics, etc.</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.cadmium.0 }}{{ form2.cadmium.1 }}{{ form2.cadmium.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.cadmium_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.cadmium_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Chromium (VI) compounds, ie; textile industry, tannery, etc.</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.chromium.0 }}{{ form2.chromium.1 }}{{ form2.chromium.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.chromium_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.chromium_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Coal-tar pitch ie; refining distilled coal, etc.</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.coal.0 }}{{ form2.coal.1 }}{{ form2.coal.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.coal_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.coal_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Arsenic and inorganic arsenic compounds, ie; painting, etc.</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.arsenic.0 }}{{ form2.arsenic.1 }}{{ form2.arsenic.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.arsenic_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.arsenic_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Nickel compounds, ie; mining, welding, etc.</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.nickel.0 }}{{ form2.nickel.1 }}{{ form2.nickel.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.nickel_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.nickel_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Plutonium, ie; nuclear industry, etc.</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.plutonium.0 }}{{ form2.plutonium.1 }}{{ form2.plutonium.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.plutonium_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.plutonium_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Beryllium and beryllium compounds, ie; metal fabrication, etc.</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.beryllium.0 }}{{ form2.beryllium.1 }}{{ form2.beryllium.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.beryllium_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.beryllium_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Ether: bis(chloromethyl)ether, chloromethyl or methyl ether (technical grade), ie; construction, etc.</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.ether.0 }}{{ form2.ether.1 }}{{ form2.ether.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.ether_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.ether_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Soot, ie; building and demolition, etc.</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.soot.0 }}{{ form2.soot.1 }}{{ form2.soot.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.soot_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.soot_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Welding fumes</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.welding.0 }}{{ form2.welding.1 }}{{ form2.welding.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.welding_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.welding_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Radiation, specifically x-radiation, gamma radiation, ie; nuclear power plant, etc.</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.radiation.0 }}{{ form2.radiation.1 }}{{ form2.radiation.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.radiation_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.radiation_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Depleted uranium ammunition - typically during military service</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.munitions.0 }}{{ form2.munitions.1 }}{{ form2.munitions.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.munitions_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.munitions_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Warfare agents - typically during military service</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.warfare.0 }}{{ form2.warfare.1 }}{{ form2.warfare.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.warfare_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.warfare_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Acheson process, ie; graphite manufacturing, etc.</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.acheson.0 }}{{ form2.acheson.1 }}{{ form2.acheson.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.acheson_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.acheson_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Aluminum production</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.aluminum.0 }}{{ form2.aluminum.1 }}{{ form2.aluminum.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.aluminum_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.aluminum_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Coal gasification</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.coal_gasification.1 }}{{ form2.coal_gasification.2 }}{{ form2.coal_gasification.3 }}</div></div>
+          <div class="field"><div class="input">{{ form2.coal_gasification_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.coal_gasification_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Coke production</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.coke.0 }}{{ form2.coke.1 }}{{ form2.coke.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.coke_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.coke_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Sulfur</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.sulfur.0 }}{{ form2.sulfur.1 }}{{ form2.sulfur.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.sulfur_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.sulfur_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Mining – Hematite (underground)</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.mining.0 }}{{ form2.mining.1 }}{{ form2.mining.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.mining_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.mining_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Iron and steel founding</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.iron.0 }}{{ form2.iron.1 }}{{ form2.iron.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.iron_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.iron_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Painting</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.painting.0 }}{{ form2.painting.1 }}{{ form2.painting.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.painting_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.painting_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Rubber production</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.rubber.0 }}{{ form2.rubber.1 }}{{ form2.rubber.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.rubber_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.rubber_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Burn pits - typically during military service</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.burn_pits.0 }}{{ form2.burn_pits.1 }}{{ form2.burn_pits.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.burn_pits_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.burn_pits_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Oil Fires - typically during military service</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.oil_fires.0 }}{{ form2.oil_fires.1 }}{{ form2.oil_fires.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.oil_fires_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.oil_fires_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Sulfur fires -- typically during military service</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.sulfur_fires.0 }}{{ form2.sulfur_fires.1 }}{{ form2.sulfur_fires.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.sulfur_fires_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.sulfur_fires_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Atsugi Waste Incinerator -- typically during military service</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.atsugi.0 }}{{ form2.atsugi.1 }}{{ form2.atsugi.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.atsugi_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.atsugi_exposure_age }}</div></div>
+        </div>
+        <div class="form-grid !grid-cols-8">
+          <div class="field col-span-4"><label>Sand and dust storms - typically during military service</label></div>
+          <div class="field col-span-2"><div class="input input-list">{{ form2.sand_storms.0 }}{{ form2.sand_storms.1 }}{{ form2.sand_storms.2 }}</div></div>
+          <div class="field"><div class="input">{{ form2.sand_storms_duration }}</div></div>
+          <div class="field"><div class="input">{{ form2.sand_storms_exposure_age }}</div></div>
+        </div>        
+      </div>
+
+      <h1>Part I. Air Pollution</h1>
+      <div class="form-grid !grid-cols-2">
+        <div class="field">
+          <label for="id_duration_outdoor_pollution">1. Over your lifetime, for how many years do you think you were exposed to moderate to heavy outdoor air pollution? (Years)</label>
+          <div class="input">
+            {{ form2.duration_outdoor_pollution }}
+          </div>
+        </div>
+        <div class="field">
+          <label for="id_duration_outdoor_pollution">2. Over your lifetime, for how many years do you think you were exposed to moderate to heavy indoor air pollution from burning of fuels or cooking where indoor ventilation was poor? (Years)</label>
+          <div class="input">
+            {{ form2.duraiton_indoor_pollution }}
+          </div>
+        </div>
+      </div>
+
+      <h1>Part J. Cooking and Food</h1>
+      <div class="form-grid">
+        <div class="field col-span-full">
+          <label class="part-j" for="id_cooking_location">1.	Where was cooking for the household done</label>
+          <div class="input">
+            {{ form2.cooking_location }}
+          </div>
+        </div>
+        <div class="field col-span-full">
+          <label class="part-j" for="id_cooking_appliances">2.	If cooking was conducted inside the house, were there any of the following? </label>
+          <div class="input input-list">
+            {{form2.cooking_appliances.1}}
+            {{form2.cooking_appliances.2}}
+            {{form2.cooking_appliances.3}}
+            {{form2.cooking_appliances.4}}
+          </div>
+        </div>
+        <div class="field col-span-full">
+          <label class="part-j" for="id_cooking">3. Do you ever do the cooking?</label>
+          <div class="input input-list">
+            {{ form2.cooking.0 }}
+            {{ form2.cooking.1 }}
+          </div>
+        </div>
+        <div class="field col-span-full">
+          <label class="part-j" for="id_frequency_in_cooking_location">4. How often are you in the house/room when the cooking is being done?</label>
+          <div class="input">
+            {{ form2.frequency_in_cooking_location }}
+          </div>
+        </div>
+        <div class="field col-span-6">
+          <label class="part-j" for="id_kitchen_range">5. Do you use a kitchen range hood when cooking?</label>
+          <div class="input input-list">
+            {{ form2.kitchen_range.0 }}
+            {{ form2.kitchen_range.1 }}
+          </div>
+        </div>
+        <div class="field col-span-6">
+          <label class="part-j" for="id_kitchen_range_age">How old were you when you began to use a kitchen hood (years)</label>
+          <div class="input">
+            {{ form2.kitchen_range_age }}
+          </div>
+        </div>
+      </div>
+
+      
+      <h2>Cooking Info</h2>
+      <div class="form-grid">
+        <div class="form-grid !grid-cols-6">
+          <div class="field">
+            <label>0-20 Frequency</label>
+            <div class="input">{{ form2.cooking_0_20_frequency }}</div>
+          </div>
+          <div class="field">
+            <label>Frequency Times</label>
+            <div class="input">{{ form2.cooking_0_20_frequency_times }}</div>
+          </div>
+          <div class="field">
+            <label>Fuel</label>
+            <div class="input">{{ form2.cooking_0_20_fuel }}</div>
+          </div>
+          <div class="field">
+            <label>Fuel (Other)</label>
+            <div class="input">{{ form2.cooking_0_20_fuel_other }}</div>
+          </div>
+          <div class="field">
+            <label>Cooking Oil</label>
+            <div class="input">{{ form2.cooking_0_20_cooking_oil }}</div>
+          </div>
+          <div class="field">
+            <label>Cooking Oil (Other)</label>
+            <div class="input">{{ form2.cooking_0_20_cooking_oil_other }}</div>
+          </div>
+        </div>
+        <div class="form-grid !grid-cols-6">
+          <div class="field">
+            <label>21-40 Frequency</label>
+            <div class="input">{{ form2.cooking_21_40_frequency }}</div>
+          </div>
+          <div class="field">
+            <label>Frequency Times</label>
+            <div class="input">{{ form2.cooking_21_40_frequency_times }}</div>
+          </div>
+          <div class="field">
+            <label>Fuel</label>
+            <div class="input">{{ form2.cooking_21_40_fuel }}</div>
+          </div>
+          <div class="field">
+            <label>Fuel (Other)</label>
+            <div class="input">{{ form2.cooking_21_40_fuel_other }}</div>
+          </div>
+          <div class="field">
+            <label>Cooking Oil</label>
+            <div class="input">{{ form2.cooking_21_40_cooking_oil }}</div>
+          </div>
+          <div class="field">
+            <label>Cooking Oil (Other)</label>
+            <div class="input">{{ form2.cooking_21_40_cooking_oil_other }}</div>
+          </div>
+        </div>
+        <div class="form-grid !grid-cols-6">
+          <div class="field">
+            <label>41-60 Frequency</label>
+            <div class="input">{{ form2.cooking_41_60_frequency }}</div>
+          </div>
+          <div class="field">
+            <label>Frequency Times</label>
+            <div class="input">{{ form2.cooking_41_60_frequency_times }}</div>
+          </div>
+          <div class="field">
+            <label>Fuel</label>
+            <div class="input">{{ form2.cooking_41_60_fuel }}</div>
+          </div>
+          <div class="field">
+            <label>Fuel (Other)</label>
+            <div class="input">{{ form2.cooking_41_60_fuel_other }}</div>
+          </div>
+          <div class="field">
+            <label>Cooking Oil</label>
+            <div class="input">{{ form2.cooking_41_60_cooking_oil }}</div>
+          </div>
+          <div class="field">
+            <label>Cooking Oil (Other)</label>
+            <div class="input">{{ form2.cooking_41_60_cooking_oil_other }}</div>
+          </div>
+        </div>
+        <div class="form-grid !grid-cols-6">
+          <div class="field">
+            <label>61-80 Frequency</label>
+            <div class="input">{{ form2.cooking_61_above_frequency }}</div>
+          </div>
+          <div class="field">
+            <label>Frequency Times</label>
+            <div class="input">{{ form2.cooking_61_above_frequency_times }}</div>
+          </div>
+          <div class="field">
+            <label>Fuel</label>
+            <div class="input">{{ form2.cooking_61_above_fuel }}</div>
+          </div>
+          <div class="field">
+            <label>Fuel (Other)</label>
+            <div class="input">{{ form2.cooking_61_above_fuel_other }}</div>
+          </div>
+          <div class="field">
+            <label>Cooking Oil</label>
+            <div class="input">{{ form2.cooking_61_above_cooking_oil }}</div>
+          </div>
+          <div class="field">
+            <label>Cooking Oil (Other)</label>
+            <div class="input">{{ form2.cooking_61_above_cooking_oil_other }}</div>
+          </div>
+        </div>
+        <div class="form-grid !grid-cols-2">
+          <div class="field">
+            <label for="id_processed_meat_frequency">6.	How often do you eat the following foods? Bacon, processed meats etc.</label>
+            <div class="input">{{ form2.processed_meat_frequency }}</div>
+          </div>
+          <div class="field">
+            <label for="id_red_meat_frequency">7.	How often do you eat the following foods? Red meat, Beef, Pork, etc.</label>
+            <div class="input">{{ form2.red_meat_frequency }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-footer">
+        <a type="button" class="btn-blue-outline icon-previous" href="{% url 'add_mandatory_questionaire_de' participant_id %}">Previous</a>
+        <button type="submit" class="btn-blue">Save</button>
+      </div>
+    </form>
+    <h1>PART K. Residential History</h1>
+    <h2>Home 1</h2>
+    <form>
+      <div>
+        <label for="id_home_1_start_yr"class="label-class">Start Year:</label>
+        {{ form3.home_1_start_yr }}
+        <label for="id_home_1_end_yr"class="label-class">End Year:</label>
+        {{ form3.home_1_end_yr }}
+        <label for="id_home_1_country"class="label-class"> Country:</label>
+        {{ form3.home_1_country }}
+        <label for="id_home_1_city" class="label-class">City:</label>
+        {{ form3.home_1_city }}
+      </div>
+      <div>
+        <label for="id_home_1_province"class="label-class">Province:</label>
+        {{ form3.home_1_province }}
+        <label for="id_home_1_postal_code"class="label-class">Postal Code:</label>
+        {{ form3.home_1_postal_code }}
+        <label for="id_home_1_street_address"class="label-class">Street Address:</label>
+        {{ form3.home_1_street_address }}
+        <label for="id_home_1_map_coordinates"class="label-class"> Map Coordinates:</label>
+        {{ form3.home_1_map_coordinates }}
+      </div>
+      <div>
+        <label for="id_home_1_avg_monthly_stay"class="label-class">Average Monthly Stay:</label>
+        {{ form3.home_1_avg_monthly_stay }}
+        <label for="id_home_1_housing_type"class="label-class"> Housing Type:</label>
+        {{ form3.home_1_housing_type }}
+        <label for="id_home_1_housing_type_other"class="label-class"> Housing Type (Other):</label>
+        {{ form3.home_1_housing_type_other }}
+        <label for="id_home_1_trucks"class="label-class"> Trucks:</label>
+        {{ form3.home_1_trucks }}
+      </div>
+      <div>
+        <label for="id_home_1_water_src"class="label-class">Water Source:</label>
+        {{ form3.home_1_water_src }}
+        <label for="id_home_1_water_src_other"class="label-class"> Water Source (Other):</label>
+        {{ form3.home_1_water_src_other }}
+        <label for="id_home_1_heat_src"class="label-class">Heat Source:</label>
+        {{ form3.home_1_heat_src }}
+        <label for="id_home_1_heat_src_other"class="label-class"> Heat Source (Other):</label>
+        {{ form3.home_1_heat_src_other }}
+      </div>
+      
+      <!-- Home 2 -->
+      <h2>Home 2</h2>
+      <div>
+        <label for="id_home_2_start_yr"class="label-class">Start Year:</label>
+        {{ form3.home_2_start_yr }}
+        <label for="id_home_2_end_yr"class="label-class"> End Year:</label>
+        {{ form3.home_2_end_yr }}
+        <label for="id_home_2_country"class="label-class">Country:</label>
+        {{ form3.home_2_country }}
+        <label for="id_home_2_city"class="label-class">City:</label>
+        {{ form3.home_2_city }}
+      </div>
+      <div>
+        <label for="id_home_2_province"class="label-class">Province:</label>
+        {{ form3.home_2_province }}
+        <label for="id_home_2_postal_code"class="label-class">Postal Code:</label>
+        {{ form3.home_2_postal_code }}
+        <label for="id_home_2_street_address"class="label-class">Street Address:</label>
+        {{ form3.home_2_street_address }}
+        <label for="id_home_2_map_coordinates"class="label-class">Map Coordinates:</label>
+        {{ form3.home_2_map_coordinates }}
+      </div>
+      <div>
+        <label for="id_home_2_avg_monthly_stay"class="label-class">Average Monthly Stay:</label>
+        {{ form3.home_2_avg_monthly_stay }}
+        <label for="id_home_2_housing_type"class="label-class">Housing Type:</label>
+        {{ form3.home_2_housing_type }}
+        <label for="id_home_2_housing_type_other"class="label-class">Housing Type (Other):</label>
+        {{ form3.home_2_housing_type_other }}
+        <label for="id_home_2_trucks"class="label-class"> Trucks:</label>
+        {{ form3.home_2_trucks }}
+      </div>
+      <div>
+        <label for="id_home_2_water_src"class="label-class">Water Source:</label>
+        {{ form3.home_2_water_src }}
+        <label for="id_home_2_water_src_other"class="label-class"> Water Source (Other):</label>
+        {{ form3.home_2_water_src_other }}
+        <label for="id_home_2_heat_src"class="label-class">Heat Source:</label>
+        {{ form3.home_2_heat_src }}
+        <label for="id_home_2_heat_src_other"class="label-class">Heat Source (Other):</label>
+        {{ form3.home_2_heat_src_other }}
+      </div>
+      
+      <!-- Home 3 -->
+      <h2>Home 3</h2>
+      <div>
+        <label for="id_home_3_start_yr"class="label-class"> Start Year:</label>
+        {{ form3.home_3_start_yr }}
+        <label for="id_home_3_end_yr"class="label-class">End Year:</label>
+        {{ form3.home_3_end_yr }}
+        <label for="id_home_3_country"class="label-class">Country:</label>
+        {{ form3.home_3_country }}
+        <label for="id_home_3_city"class="label-class">City:</label>
+        {{ form3.home_3_city }}
+      </div>
+      <div>
+        <label for="id_home_3_province"class="label-class"> Province:</label>
+        {{ form3.home_3_province }}
+        <label for="id_home_3_postal_code"class="label-class"> Postal Code:</label>
+        {{ form3.home_3_postal_code }}
+        <label for="id_home_3_street_address"class="label-class"> Street Address:</label>
+        {{ form3.home_3_street_address }}
+        <label for="id_home_3_map_coordinates"class="label-class"> Map Coordinates:</label>
+        {{ form3.home_3_map_coordinates }}
+      </div>
+      <div>
+        <label for="id_home_3_avg_monthly_stay"class="label-class"> Average Monthly Stay:</label>
+        {{ form3.home_3_avg_monthly_stay }}
+        <label for="id_home_3_housing_type"class="label-class"> Housing Type:</label>
+        {{ form3.home_3_housing_type }}
+        <label for="id_home_3_housing_type_other"class="label-class"> Housing Type (Other):</label>
+        {{ form3.home_3_housing_type_other }}
+        <label for="id_home_3_trucks"class="label-class">Trucks:</label>
+        {{ form3.home_3_trucks }}
+      </div>
+      <div>
+        <label for="id_home_3_water_src"class="label-class">Water Source:</label>
+        {{ form3.home_3_water_src }}
+        <label for="id_home_3_water_src_other"class="label-class">Water Source (Other):</label>
+        {{ form3.home_3_water_src_other }}
+        <label for="id_home_3_heat_src"class="label-class"> Heat Source:</label>
+        {{ form3.home_3_heat_src }}
+        <label for="id_home_3_heat_src_other"class="label-class"> Heat Source (Other):</label>
+        {{ form3.home_3_heat_src_other }}
+      </div>
+      
+      <!-- Home 4 -->
+      <h2>Home 4</h2>
+      <div>
+        <label for="id_home_4_start_yr"class="label-class">Start Year:</label>
+        {{ form3.home_4_start_yr }}
+        <label for="id_home_4_end_yr"class="label-class">End Year:</label>
+        {{ form3.home_4_end_yr }}
+        <label for="id_home_4_country"class="label-class"> Country:</label>
+        {{ form3.home_4_country }}
+        <label for="id_home_4_city"class="label-class"> City:</label>
+        {{ form3.home_4_city }}
+      </div>
+      <div>
+        <label for="id_home_4_province"class="label-class">Province:</label>
+        {{ form3.home_4_province }}
+        <label for="id_home_4_postal_code"class="label-class">Postal Code:</label>
+        {{ form3.home_4_postal_code }}
+        <label for="id_home_4_street_address"class="label-class"> Street Address:</label>
+        {{ form3.home_4_street_address }}
+        <label for="id_home_4_map_coordinates"class="label-class">Map Coordinates:</label>
+        {{ form3.home_4_map_coordinates }}
+      </div>
+      <div>
+       <label for="id_home_4_avg_monthly_stay"class="label-class">Average Monthly Stay:</label>
+        {{ form3.home_4_avg_monthly_stay }}
+        <label for="id_home_4_housing_type"class="label-class"> Housing Type:</label>
+        {{ form3.home_4_housing_type }}
+        <label for="id_home_4_housing_type_other"class="label-class"> Housing Type (Other):</label>
+        {{ form3.home_4_housing_type_other }}
+        <label for="id_home_4_trucks"class="label-class"> Trucks:</label>
+        {{ form3.home_4_trucks }}
+      </div>
+      <div>
+        <label for="id_home_4_water_src"class="label-class"> Water Source:</label>
+        {{ form3.home_4_water_src }}
+        <label for="id_home_4_water_src_other"class="label-class"> Water Source (Other):</label>
+        {{ form3.home_4_water_src_other }}
+        <label for="id_home_4_heat_src"class="label-class"> Heat Source:</label>
+        {{ form3.home_4_heat_src }}
+        <label for="id_home_4_heat_src_other"class="label-class"> Heat Source (Other):</label>
+        {{ form3.home_4_heat_src_other }}
+      </div>
+      
+      <!-- Home 5 -->
+      <h2>Home 5</h2>
+      <div>
+        <label for="id_home_5_start_yr"class="label-class"> Start Year:</label>
+        {{ form3.home_5_start_yr }}
+        <label for="id_home_5_end_yr"class="label-class"> End Year:</label>
+        {{ form3.home_5_end_yr }}
+        <label for="id_home_5_country"class="label-class">Country:</label>
+        {{ form3.home_5_country }}
+        <label for="id_home_5_city"class="label-class">City:</label>
+        {{ form3.home_5_city }}
+      </div>
+      <div>
+        <label for="id_home_5_province"class="label-class"> Province:</label>
+        {{ form3.home_5_province }}
+        <label for="id_home_5_postal_code"class="label-class"> Postal Code:</label>
+        {{ form3.home_5_postal_code }}
+        <label for="id_home_5_street_address"class="label-class"> Street Address:</label>
+        {{ form3.home_5_street_address }}
+        <label for="id_home_5_map_coordinates"class="label-class">Map Coordinates:</label>
+        {{ form3.home_5_map_coordinates }}
+      </div>
+      <div>
+        <label for="id_home_5_avg_monthly_stay"class="label-class"> Average Monthly Stay:</label>
+        {{ form3.home_5_avg_monthly_stay }}
+        <label for="id_home_5_housing_type"class="label-class"> Housing Type:</label>
+        {{ form3.home_5_housing_type }}
+        <label for="id_home_5_housing_type_other"class="label-class">Housing Type (Other):</label>
+        {{ form3.home_5_housing_type_other}}
+        <label for="id_home_5_trucks"class="label-class">Trucks:</label>
+        {{ form3.home_5_trucks }}
+      </div>
+      <div>
+        <label for="id_home_5_water_src"class="label-class"> Water Source:</label>
+        {{ form3.home_5_water_src }}
+        <label for="id_home_5_water_src_other"class="label-class"> Water Source (Other):</label>
+        {{ form3.home_5_water_src_other }}
+        <label for="id_home_5_heat_src"class="label-class">Heat Source:</label>
+        {{ form3.home_5_heat_src }}
+        <label for="id_home_5_heat_src_other"class="label-class">Heat Source (Other):</label>
+        {{ form3.home_5_heat_src_other }}
+      </div>
+      
+      <!-- Home 6 -->
+      <h2>Home 6</h2>
+      <div>
+        <label for="id_home_6_start_yr"class="label-class"> Start Year:</label>
+        {{ form3.home_6_start_yr }}
+        <label for="id_home_6_end_yr"class="label-class"> End Year:</label>
+        {{ form3.home_6_end_yr }}
+        <label for="id_home_6_country"class="label-class"> Country:</label>
+        {{ form3.home_6_country }}
+        <label for="id_home_6_city"class="label-class"> City:</label>
+        {{ form3.home_6_city }}
+      </div>
+      <div>
+        <label for="id_home_6_province"class="label-class">Province:</label>
+        {{ form3.home_6_province }}
+        <label for="id_home_6_postal_code"class="label-class">Postal Code:</label>
+        {{ form3.home_6_postal_code }}
+        <label for="id_home_6_street_address"class="label-class"> Street Address:</label>
+        {{ form3.home_6_street_address }}
+        <label for="id_home_6_map_coordinates"class="label-class">Map Coordinates:</label>
+        {{ form3.home_6_map_coordinates }}
+      </div>
+      <div>
+        <label for="id_home_6_avg_monthly_stay"class="label-class"> Average Monthly Stay:</label>
+        {{ form3.home_6_avg_monthly_stay }}
+        <label for="id_home_6_housing_type"class="label-class"> Housing Type:</label>
+        {{ form3.home_6_housing_type }}
+        <label for="id_home_6_housing_type_other"class="label-class"> Housing Type (Other):</label>
+        {{ form3.home_6_housing_type_other }}
+        <label for="id_home_6_trucks"class="label-class"> Trucks:</label>
+        {{ form3.home_6_trucks }}
+      </div>
+      <div>
+        <label for="id_home_6_water_src"class="label-class"> Water Source:</label>
+        {{ form3.home_6_water_src }}
+        <label for="id_home_6_water_src_other"class="label-class"> Water Source (Other):</label>
+        {{ form3.home_6_water_src_other }}
+        <label for="id_home_6_heat_src"class="label-class"> Heat Source:</label>
+        {{ form3.home_6_heat_src }}
+        <label for="id_home_6_heat_src_other"class="label-class"> Heat Source (Other):</label>
+        {{ form3.home_6_heat_src_other }}
+      </div>
+      <button class="btn-blue-outline btn-sm icon-add">Add Home</button>
+    </br>
+        <button type="submit" class="btn-green">Save</button>
+    </form>
+  </br>
+  </div>
+</div> 
+{% endblock %}

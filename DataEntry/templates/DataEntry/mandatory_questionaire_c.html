@@ -1,0 +1,425 @@
+{% extends 'base.html' %}
+
+{% block title %}Part C. Smoking History{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div id="main">
+    <div id="lab_processing" class="dataentry">
+        <h1>Part C. Smoking History</h1>
+        <div class="print:hidden text-right -mb-8">
+            <button onclick="window.print();" class="btn-blue btn-sm icon-print" title="Download PDF"></button>
+            <a href="{% url 'add_mandatory_questionaire_c' participant_id %}?generate_csv=true" class="btn-blue btn-sm icon-csv" title="Download CSV"></a>
+        </div>
+        <form method="post" action="{{ form_action_url }}">
+            {% csrf_token %}
+            <input type="hidden" name="participant_num" value="{{ participant_id }}">
+            <h2>1. Smoked Cigarettes</h2>
+            <div class="form-grid field-toggler checkbox-toggler" data-input-name="smoked_more_100_cigs" data-target-selector=".smoked_more_100_cigs" data-visible-value="True">
+                <div class="form-grid field-group">
+                    <div class="field field-inline col-span-full">
+                        <label for="{{ form.smoked_more_100_cigs.id_for_label }}">(a) Have you smoked more than 100 cigarettes in your lifetime?</label>
+                        <div class="input input-list">
+                            {{ form.smoked_more_100_cigs.0 }}
+                            {{ form.smoked_more_100_cigs.1 }}
+                        </div>
+                    </div>
+                    <div class="field col-span-5 smoked_more_100_cigs">
+                        <label for="{{ form.age_regular_smoking.id_for_label }}">(b) How old were you when you started smoking regularly? </label>
+                        <div class="input">
+                            {{ form.age_regular_smoking }}
+                        </div>
+                    </div>
+                    <div class="field col-span-6 smoked_more_100_cigs">
+                        <label for="{{ form.avg_cig_per_day.id_for_label }}">(c) When smoking, on average, how many cigarettes did / do you smoke per day?</label>
+                        <div class="input">
+                            {{ form.avg_cig_per_day }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Stop Smoking -->
+                <div class="form-grid field-group field-toggler smoked_more_100_cigs checkbox-toggler" data-input-name="stopped_smoking" data-target-selector=".stopped_smoking" data-visible-value="True">
+                    <div class="field field-inline col-span-full">
+                        <label for="{{ form.stop_smoking.id_for_label }}">(d) Have you stopped smoking cigarettes now?</label>
+                        <div class="input input-list">
+                            {{ form.stopped_smoking.0 }}
+                            {{ form.stopped_smoking.1 }}
+                        </div>
+                    </div>
+                    <div class="field col-span-5 stopped_smoking">
+                        <label for="{{ form.last_cig_date.id_for_label }}">(e) When did you last smoke cigarettes?</label>
+                        <div class="input">
+                            {{ form.last_cig_date }}
+                        </div>
+                    </div>
+                    <div class="field col-span-6 stopped_smoking">
+                        <label for="{{ form.last_cig_date.id_for_label }}">(f) How old were you?</label>
+                        <div class="input">
+                            {{ form.last_cig_age }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h2>2. Smoked Marijuana/Cannabis or Hashish</h2>
+            <div class="form-grid">
+                <!-- Smoked Cannabis -->
+                <div class="form-grid">
+                    <div class="form-grid field-group field-toggler checkbox-toggler" data-input-name="marajuana_use" data-target-selector=".marajuana_use" data-visible-value="True">
+                        <div class="field field-inline col-span-full">
+                            <label for="{{ form.marajuana_use.id_for_label }}">Have you ever used or tried marijuana/cannabis or hashish:</label>
+                            <div class="input input-list toggle">
+                                {{ form.marajuana_use.0 }}
+                                {{ form.marajuana_use.1 }}    
+                            </div>
+                        </div>
+                        <div class="col-span-full repeater-field marajuana_use max-w-3xl !rounded-sm relative overflow-hidden">
+                            <div class="form-grid" data-max="4">
+                                <div class="form-grid repeater-container form-grid-heading !grid-cols-5">
+                                    <label for="{{ form.marajuana_use_age_1.id_for_label }}">From Age (Years)</label>
+                                    <label for="{{ form.marajuana_use_age_1_quantity.id_for_label }}">To Age (Years)</label>
+                                    <label for="{{ form.marajuana_use_age_1_quantity.id_for_label }}">Quantity of Use</label>
+                                    <label for="{{ form.marajuana_use_age_1_mode.id_for_label }}">Mode of Use</label>
+                                    <label for="{{ form.marajuana_use_age_1_units.id_for_label }}">Units</label>
+                                </div>
+                                <div class="repeater-template form-grid !grid-cols-5">
+                                    <div class="input">{{ form.marajuana_use_age_1 }}</div>
+                                    <div class="input">{{ form.marajuana_use_to_age_1 }}</div>
+                                    <div class="input">{{ form.marajuana_use_age_1_quantity }}</div>
+                                    <div class="input">{{ form.marajuana_use_age_1_mode }}</div>
+                                    <div class="input">{{ form.marajuana_use_age_1_units }}</div>
+                                </div>
+                                <div class="form-grid !grid-cols-5">
+                                    <div class="input">{{ form.marajuana_use_age_2 }}</div>
+                                    <div class="input">{{ form.marajuana_use_to_age_2 }}</div>
+                                    <div class="input">{{ form.marajuana_use_age_2_quantity }}</div>
+                                    <div class="input">{{ form.marajuana_use_age_2_mode }}</div>
+                                    <div class="input">{{ form.marajuana_use_age_2_units }}</div>
+                                </div>
+                            </div>
+                            <!-- div class="table-row">
+                                <div class="table-cell">
+                                <label for="{{ form.marajuana_use_age_1.id_for_label }}">From Age (Years)</label>
+                                {{ form.marajuana_use_age_2 }}
+                                </div>
+                                <div class="table-cell">
+                                <label for="{{ form.marajuana_use_age_1_quantity.id_for_label }}">To Age (Years)</label>
+                                {{ form.marajuana_use_to_age_2 }}
+                                </div>
+                                <div class="table-cell">
+                                <label for="{{ form.marajuana_use_age_1_quantity.id_for_label }}">Quantity of Use</label>
+                                {{ form.marajuana_use_age_2_quantity }}
+                                </div>
+                                <div class="table-cell">
+                                <label for="{{ form.marajuana_use_age_1_mode.id_for_label }}">Mode of Use</label>
+                                {{ form.marajuana_use_age_2_mode }}
+                                </div>
+                                <div class="table-cell">
+                                <label for="{{ form.marajuana_use_age_1_units.id_for_label }}">Units</label>
+                                {{ form.marajuana_use_age_2_units }}
+                                </div>
+                            </div-->
+                        </div>
+                        <div class="col-span-full marajuana_use max-w-3xl text-center !pt-0">
+                            <button class="btn-blue-outline btn-sm icon-add w-full" id="add-row-button">Add Row</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h2>3. Smoked Pipe</h2>
+
+            <div class="form-grid form-group field-toggler checkbox-toggler" data-input-name="smoked_pipe" data-target-selector=".smoke_pipe" data-visible-value="True">
+                <div class="field field-inline col-span-full">
+                    <label for="{{ form.smoked_pipe.id_for_label }}">Have you ever smoked a pipe at least once a week for 1 year or longer? </label>
+                    <div class="input input-list">
+                        {{ form.smoked_pipe.0 }}
+                        {{ form.smoked_pipe.1 }}
+                    </div>
+                </div>
+                <div class="field col-span-3 smoke_pipe">
+                    <label for="{{ form.smoked_pipe_avg_ounces.id_for_label }}">(b) Average Ounces of Pipe Smoking</label>
+                    <div class="input">
+                        {{ form.smoked_pipe_avg_ounces }}
+                    </div>
+                </div>
+                <div class="form-grid field-group !col-span-9 smoke_pipe field-toggler checkbox-toggler" data-input-name="still_smoking_pipe" data-target-selector=".still_smoking_pipe" data-visible-value="True">
+                    <div class="field col-span-4 smoke_pipe">
+                        <label for="{{ form.still_smoking_pipe.id_for_label }}">(c) Do you still smoke a pipe now?</label>
+                        <div class="input input-list">
+                            {{ form.still_smoking_pipe.0 }}
+                            {{ form.still_smoking_pipe.1 }}
+                        </div>
+                    </div>
+                    <div class="form-grid field-group !p-0 !bg-blue-50 !col-span-8 still_smoking_pipe items-center">
+                        <div class="field col-span-5">
+                            <label for="{{ form.still_smoking_pipe_stop_date.id_for_label }}">Stop Date</label>
+                            <div class="input">
+                                {{ form.still_smoking_pipe_stop_date }}
+                            </div>
+                        </div>
+                        <div class="col-span-2 text-center h-full flex flex-col justify-end items-center">
+                            <div class="aspect-square mb-1 bg-blue text-white rounded-full h-8 w-8 inline-flex items-center justify-center">OR</div>
+                        </div>
+                        <div class="field col-span-5">
+                            <label for="{{ form.still_smoking_pipe_stop_age.id_for_label }}">Stop Age</label>
+                            <div class="input">
+                                {{ form.still_smoking_pipe_stop_age }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>4. Smoked Cigars</h2>
+
+            <div class="form-grid form-group field-toggler checkbox-toggler" data-input-name="smoked_cigars" data-target-selector=".smoked_cigars" data-visible-value="True">
+                <div class="field field-inline col-span-full">
+                    <label for="id_still_smoke_cigars">(a) Have you ever smoked cigars at least once a week for 1 year or longer?</label>
+                    <div class="input input-list">
+                        {{ form.smoked_cigars.0 }}
+                        {{ form.smoked_cigars.1 }}
+                    </div>
+                </div>
+                <div class="field col-span-4 smoked_cigars">
+                    <label>(b) If yes, average number of cigars per week</label>
+                    <div class="input">
+                        {{ form.avg_num_cigars }}
+                    </div>
+                </div>
+                <div class="form-grid field-group smoked_cigars !p-0 !bg-blue-50 !col-span-8 still_smoking_pipe items-center">
+                    <div class="field col-span-5">
+                        <label for="id_still_smoke_cigars_stop_date">Start Date:</label>
+                        <div class="input">
+                            {{ form.still_smoke_cigars_start_date }}
+                        </div>
+                    </div>
+                    <div class="col-span-2 text-center h-full flex flex-col justify-end items-center">
+                        <div class="aspect-square mb-1 bg-blue text-white rounded-full h-8 w-8 inline-flex items-center justify-center">OR</div>
+                    </div>
+                    <div class="field col-span-5">
+                        <label for="id_still_smoke_cigars_stop_age">Start Age:</label>
+                        <div class="input">
+                            {{ form.still_smoke_cigars_start_age }}
+                        </div>
+                    </div>
+                </div>
+                <div class="field col-span-4 smoked_cigars field-toggler checkbox-toggler" data-input-name="still_smoke_cigars" data-target-selector=".still_smoke_cigars" data-visible-value="True">
+                    <label>(c) Do you still smoke cigars now?</label>
+                    <div class="input input-list">
+                        {{ form.still_smoke_cigars.0 }}
+                        {{ form.still_smoke_cigars.1 }}
+                    </div>
+                </div>
+                <div class="form-grid field-group !p-0 !bg-blue-50 !col-span-8 still_smoking_pipe items-center">
+                    <div class="field col-span-5 still_smoke_cigars">
+                        <label for="id_still_smoke_cigars_stop_date">Stop Date:</label>
+                        <div class="input">
+                            {{ form.still_smoke_cigars_stop_date }}
+                        </div>
+                    </div>
+                    <div class="col-span-2 still_smoke_cigars text-center h-full flex flex-col justify-end items-center">
+                        <div class="aspect-square mb-1 bg-blue text-white rounded-full h-8 w-8 inline-flex items-center justify-center">OR</div>
+                    </div>
+                    <div class="field col-span-5 still_smoke_cigars">
+                        <label for="id_still_smoke_cigars_stop_age">Stop Age:</label>
+                        <div class="input">
+                            {{ form.still_smoke_cigars_stop_age }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+              
+              <h2>5. Used Chewing Tobacco</h2>
+
+            <div class="form-grid">
+                <div class="form-grid !grid-cols-3">
+                    <div class="field">
+                        <label for="id_chewing_tobacco">Have you ever used chewing tobacco?</label>
+                        <div class="input">
+                            {{ form.chewing_tobacco }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="id_chewing_tobacco_age">Chewing Tobacco Starting Age:</label>
+                        <div class="input">
+                            {{ form.chewing_tobacco_age }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="id_chewing_tobacco_years">Chewing Tobacco Total Years:</label>
+                        <div class="input">
+                            {{ form.chewing_tobacco_years }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-grid !grid-cols-3">
+                    <div class="field">
+                        <label for="id_snuff">(b) Have you ever used Snuff?</label>
+                        <div class="input">
+                            {{ form.snuff }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="id_snuff_age">Snuff Starting Age:</label>
+                        <div class="input">
+                            {{ form.snuff_age }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="id_snuff_years">Snuff Total Years:</label>
+                        <div class="input">
+                            {{ form.snuff_years }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+              <h2>6. Vaped</h2>
+
+            <div class="form-grid">
+                <div class="field col-span-full">
+                    <label for="id_vape">Have you ever vaped at least once a week for 1 year or longer?</label>
+                    <div class="input input-list">
+                        {{ form.vape.0 }}
+                        {{ form.vape.1 }}
+                    </div>
+                </div>
+                <div class="field col-span-4">
+                    <label for="id_vape_num_times">(b) Number of Times/Week:</label>
+                    <div class="input">
+                        {{ form.vape_num_times }}
+                    </div>
+                </div>
+                <div class="form-grid field-group !p-0 !bg-blue-50 !col-span-8 still_smoking_pipe items-center">
+                    <div class="field col-span-5">
+                        <label for="id_vape_start_date">Vape Start Date:</label>
+                        <div class="input">
+                            {{ form.vape_start_date }}
+                        </div>
+                    </div>
+                    <div class="col-span-2 text-center h-full flex flex-col justify-end items-center">
+                        <div class="aspect-square mb-1 bg-blue text-white rounded-full h-8 w-8 inline-flex items-center justify-center">OR</div>
+                    </div>
+                    <div class="field col-span-5">
+                        <label for="id_vape_start_age">Vape Start Age:</label>
+                        <div class="input">
+                            {{ form.vape_start_age }}
+                        </div>
+                    </div>
+                </div>
+                <div class="field col-span-4">
+                    <label for="id_still_vape">(d) Do you still vape now?</label>
+                    <div class="input input-list">
+                        {{ form.still_vape.0 }}
+                        {{ form.still_vape.1 }}    
+                    </div>
+                </div>
+                <div class="form-grid field-group !p-0 !bg-blue-50 !col-span-8 still_smoking_pipe items-center">
+                    <div class="field col-span-5">
+                        <label for="id_vape_stop_date">Vape Stop Date:</label>
+                        <div class="input">
+                            {{ form.vape_stop_date }}
+                        </div>
+                    </div>
+                    <div class="col-span-2 text-center h-full flex flex-col justify-end items-center">
+                        <div class="aspect-square mb-1 bg-blue text-white rounded-full h-8 w-8 inline-flex items-center justify-center">OR</div>
+                    </div>
+                    <div class="field col-span-5">
+                        <label for="id_still_vape_stop_age">Still Vape Stop Age:</label>
+                        <div class="input">
+                            {{ form.still_vape_stop_age }}
+                        </div>
+                    </div>
+                </div>
+                <div class="field col-span-full">
+                    <label for="id_vape_flavor">(e) What flavor do you vape?</label>
+                    <div class="input">
+                        {{ form.vape_flavor }}
+                    </div>
+                </div>
+            </div>
+    
+            <h2>7. Please answer the following questions based on the average situation during the period you smoke/smoked.</h2>
+
+            <div class="form-grid">
+                <div class="col-span-3 field">
+                    <label for="id_cigs_waking_up">(a) Cigarettes upon Waking Up:</label>
+                    <div class="input">
+                        {{ form.cigs_waking_up }}
+                    </div>
+                </div>
+                <div class="col-span-3 field">
+                    <label for="id_smoke_refrain">(b) Do/did you find it difficult to refrain from smoking in places where it is forbidden?</label>
+                    <div class="input input-list">
+                        {{ form.smoke_refrain.0 }}
+                        {{ form.smoke_refrain.1 }}
+                    </div>
+                </div>
+                <div class="col-span-3 field">
+                    <label for="id_cig_giveup">(c)  Which cigarette would you (have) hate/hated to give up?</label>
+                    <div class="input">
+                        {{ form.cig_giveup }}
+                    </div>
+                </div>
+                <div class="col-span-3 field">
+                    <label for="id_smoke_morning">(d) Do you smoke more frequently in the morning?</label>
+                    <div class="input input-list">
+                        {{ form.smoke_morning.0 }}
+                        {{ form.smoke_morning.1 }}
+                    </div>
+                </div>
+                <div class="col-span-3 field">
+                    <label for="id_smoke_sick">(e) Do/did you smoke even if you are sick in bed most of the day?</label>
+                    <div class="input input-list">
+                        {{ form.smoke_sick.0 }}
+                        {{ form.smoke_sick.1 }}
+                    </div>
+                </div>
+                <div class="col-span-3 field">
+                    <label for="id_quit_smoking">(f) If currently smoking, have you ever tried to quit smoking?</label>
+                    <div class="input input-list">
+                        {{ form.quit_smoking.0 }}
+                        {{ form.quit_smoking.1 }}
+                    </div>
+                </div>
+                <div class="col-span-6 field">
+                    <label for="id_quit_smoking_times">How many times?</label>
+                    <div class="input">
+                        {{ form.quit_smoking_times }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-footer">
+               <a type="button" class="btn-blue-outline icon-previous right-margin" href="{% url 'add_mandatory_questionaire' participant_id %}">Previous</a>
+               <button type="submit" class="btn-blue right-margin">Save</button>
+               <a type="button" class="btn-green icon-next right-margin" href="{% url 'add_mandatory_questionaire_de' participant_id %}">Continue</a>
+           </div>
+        </form>
+    </div> 
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const addRowButton = document.getElementById('add-row-button');
+        const table = document.querySelector('.table');
+        const sampleRow = document.querySelector('.table-row'); 
+    
+        addRowButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            const newRow = sampleRow.cloneNode(true);
+            const inputElements = newRow.querySelectorAll('input');
+            inputElements.forEach((input) => {
+                const currentId = input.getAttribute('id');
+                if (currentId) {
+                    const newId = currentId.replace('marajuana_use_age_1', 'marajuana_use_age_3'); 
+                    input.setAttribute('id', newId);
+                }
+            });
+    
+            table.appendChild(newRow);
+        });
+    });
+</script>
+{% endblock %}

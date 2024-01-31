@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Lab Processing{% endblock %}
+{% block head %}
+{% endblock %}
+
+{%block content%}
+{% load crispy_forms_tags %}
+<div id="main">
+    <div id="lab_processing">
+        <h1>Lab Processing PDF Upload</h1>
+        <div class="grid grid-cols-2 gap-12">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="field">
+                    <label>Select PDF for Upload</label>
+                    <div class="input">
+                        {{ form.lab_processing_upload }}
+                    </div>
+                </div>
+                <div class="form-footer">
+                    <button type="submit" class="btn-green">Upload</button>
+                </div>
+            </form>
+            <div>
+                <h2>Uploaded Files:</h2>
+                <ul class="list-disc">
+                    {% for file in uploaded_files %}
+                        <li>
+                            <a href="{{ file.lab_processing_upload.url }}" download>{{ file.lab_processing_upload.name }}</a>
+                        </li>
+                    {% empty %}
+                        <li>No files uploaded yet.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#myTabs a').click(function(e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,400 @@
+{% extends 'base.html' %}
+
+{% block title %}Annual Study Update{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div id="main">
+  <div id="lab_processing" class="dataentry">     
+    <h1>Annual Study Update - Part A</h1>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="participant_num" value="{{ participant_id }}">
+      <div class="form-grid !grid-cols-3">
+        <div class="field">
+          <label for="{{ form.update_starting_date.id_for_label }}">Update Starting Date:</label>
+          <div class="input">
+            {{ form.update_starting_date }}
+          </div>
+        </div>
+        <div class="field">
+          <label for="{{ form.update_end_sate.id_for_label }}">Update End Date:</label>
+          <div class="input">
+            {{ form.update_end_sate }}
+          </div>
+        </div>
+        <div class="field">
+          <label for="{{ form.followup_time_period.id_for_label }}">Followup Time Period:</label>
+          <div class="input">
+            {{ form.followup_time_period }}
+          </div>
+        </div>
+      </div>
+      <h2>Part A. Health Care Visits</h2>
+      <div>
+        <label for="{{ form.regular_family_doc.id_for_label }}">A1. Do you have a regular family doctor?</label>
+        {{ form.regular_family_doc.0 }}
+          {{ form.regular_family_doc.1 }}
+      </div>
+      <p>a.	GP Information:</p>
+      <div>
+        <label for="{{ form.gp_name.id_for_label }}">GP Name:</label>
+        {{ form.gp_name }}
+        <label for="{{ form.gp_address.id_for_label }}">GP Address:</label>
+        {{ form.gp_address }}
+        <label for="{{ form.gp_telephone.id_for_label }}">GP Telephone:</label>
+        {{ form.gp_telephone }}
+        <label for="{{ form.gp_msp.id_for_label }}">GP MSP:</label>
+        {{ form.gp_msp }}
+      </div>
+      <div>
+        <label for="{{ form.gp_fax.id_for_label }}">GP Fax:</label>
+        {{ form.gp_fax }}
+        <label for="{{ form.gp_visit.id_for_label }}">GP Visit:</label>
+        {{ form.gp_visit }}
+      </div>
+      <p>A2. Since the date on the front of this form, have you visited your family doctor or other doctor for any reason?  </p>
+      <p>a.	Did your family doctor or specialist send you for any of the following procedures? (Refer to F2 - APPENDIX FOR DESCRIPTIONS)</p>
+      
+      <table>
+          <tr>
+            <td><label for="{{ form.chest_xray.id_for_label }}">Chest X-Ray:</label></td>
+            <td>{{ form.chest_xray.0 }}
+              {{ form.chest_xray.1 }}</td>
+            
+            <td><label for="{{ form.chest_xray_date.id_for_label }}">Chest X-Ray Date:</label></td>
+            <td>{{ form.chest_xray_date }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.ct_scan_chest.id_for_label }}">CT scan (CAT) Chest</label></td>
+            <td>{{ form.ct_scan_chest.0 }}
+              {{ form.ct_scan_chest.1 }}</td>
+              
+            <td><label for="{{ form.ct_scan_chest_date.id_for_label }}">{{ form.ct_scan_chest_date.label }}</label></td>
+            <td>{{ form.ct_scan_chest_date }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.ct_scan_heart.id_for_label }}">CT scan (CAT) Heart</label></td>
+            <td>{{ form.ct_scan_heart.0 }}
+              {{ form.ct_scan_heart.1 }}
+            </td>
+
+            <td><label for="{{ form.ct_scan_heart_date.id_for_label }}">{{ form.ct_scan_heart_date.label }}</label></td>
+            <td>{{ form.ct_scan_heart_date.0 }}
+              {{ form.ct_scan_heart_date.1 }}
+              </td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.chest_mri.id_for_label }}">Chest MRI (magnetic resonance imaging of chest or heart)</label></td>
+            <td>{{ form.chest_mri.0 }}
+              {{ form.chest_mri.1 }}
+            </td>
+            <td><label for="{{ form.chest_mri_date.id_for_label }}">{{ form.chest_mri_date.label }}</label></td>
+            <td>{{ form.chest_mri_date }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.pet_scan.id_for_label }}">PET scan</label></td>
+            <td>{{ form.pet_scan.0 }}
+              {{ form.pet_scan.1 }}
+            </td>
+
+            <td><label for="{{ form.pet_scan_date.id_for_label }}">{{ form.pet_scan_date.label }}</label></td>
+            <td>{{ form.pet_scan_date }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.nuclear_scan.id_for_label }}">Nuclear medicine scan of chest/lungs</label></td>
+            <td>{{ form.nuclear_scan.0 }}
+              {{ form.nuclear_scan.1 }}
+            </td>
+            <td><label for="{{ form.nuclear_scan_date.id_for_label }}">{{ form.nuclear_scan_date.label }}</label></td>
+            <td>{{ form.nuclear_scan_date }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.surgery_chest_lung.id_for_label }}">Surgery to chest/lung</label></td>
+            <td>{{ form.surgery_chest_lung.0 }}
+              {{ form.surgery_chest_lung.1 }}
+            </td>
+            <td><label for="{{ form.surgery_chest_lung_date.id_for_label }}">{{ form.surgery_chest_lung_date.label }}</label></td>
+            <td>{{ form.surgery_chest_lung_date }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.biopsy_chest_lung.id_for_label }}">Biopsy of chest/lung</label></td>
+            <td>{{ form.biopsy_chest_lung.0 }}
+              {{ form.biopsy_chest_lung.1 }}
+            </td>
+            <td><label for="{{ form.biopsy_chest_lung_date.id_for_label }}">{{ form.biopsy_chest_lung_date.label }}</label></td>
+            <td>{{ form.biopsy_chest_lung_date }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.bronchoscopy.id_for_label }}">Bronchoscopy (tube inserted in airways to study lungs)</label></td>
+            <td>{{ form.bronchoscopy.0 }}
+              {{ form.bronchoscopy.1 }}
+            </td>
+            <td><label for="{{ form.bronchoscopy_date.id_for_label }}">{{ form.bronchoscopy_date.label }}</label></td>
+            <td>{{ form.bronchoscopy_date }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.lung_cancer_chemo.id_for_label }}">Lung cancer chemotherapy</label></td>
+            <td>{{ form.lung_cancer_chemo.0 }}
+              {{ form.lung_cancer_chemo.1 }}
+            </td>
+            <td><label for="{{ form.lung_cancer_chemo_date.id_for_label }}">{{ form.lung_cancer_chemo_date.label }}</label></td>
+            <td>{{ form.lung_cancer_chemo_date }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.lung_cancer_radiation.id_for_label }}">Lung cancer radiotherapy</label></td>
+            <td>{{ form.lung_cancer_radiation.0 }}
+              {{ form.lung_cancer_radiation.1 }}
+            </td>
+            <td><label for="{{ form.lung_cancer_radiation_date.id_for_label }}">{{ form.lung_cancer_radiation_date.label }}</label></td>
+            <td>{{ form.lung_cancer_radiation_date }}</td>
+          </tr>
+
+          </table>
+          <table>
+          <tr>
+            <td><label for="{{ form.other_lung_cancer_treatment.id_for_label }}">Other lung test or lung cancer therapy, please specify</label></td>
+            <td>{{ form.other_lung_cancer_treatment.0 }}
+              {{ form.other_lung_cancer_treatment.1 }}
+            </td>
+            <td><label for="{{ form.other_lung_cancer_treatment_date.id_for_label }}">{{ form.other_lung_cancer_treatment_date.label }}</label></td>
+            <td>{{ form.other_lung_cancer_treatment_date }}</td>
+            <td><label for="{{ form.other_lung_cancer_treatment_info.id_for_label }}">{{ form.other_lung_cancer_treatment_info.label }}</label></td>
+            <td>{{ form.other_lung_cancer_treatment_info }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.other_medical_procedures.id_for_label }}">{{ form.other_medical_procedures.label }}</label></td>
+            <td>{{ form.other_medical_procedures.0 }}
+              {{ form.other_medical_procedures.1 }}
+            </td>
+            <td><label for="{{ form.other_medical_procedures_date.id_for_label }}">Did you have any procedures for any other medical condition, please specify:</label></td>
+            <td>{{ form.other_medical_procedures_date }}</td>
+            <td><label for="{{ form.other_medical_procedures_info.id_for_label }}">{{ form.other_medical_procedures_info.label }}</label></td>
+            <td>{{ form.other_medical_procedures_info }}</td>
+          </tr>
+          </table>
+          <table>
+          <tr>
+            <td><label for="{{ form.lung_cancer_diagnosis.id_for_label }}">Diagnosis of lung cancer</label></td>
+            <td>{{ form.lung_cancer_diagnosis.0 }}
+              {{ form.lung_cancer_diagnosis.1 }}
+            </td>
+            <td><label for="{{ form.lung_cancer_diagnosis_date.id_for_label }}">{{ form.lung_cancer_diagnosis_date.label }}</label></td>
+            <td>{{ form.lung_cancer_diagnosis_date }}</td>
+            <td><label for="{{ form.lung_cancer_diagnosis_info.id_for_label }}">{{ form.lung_cancer_diagnosis_info.label }}</label></td>
+            <td>{{ form.lung_cancer_diagnosis_info }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.lung_cancer_treatment.id_for_label }}">Treatment of lung cancer</label></td>
+            <td>{{ form.lung_cancer_treatment.0 }}
+              {{ form.lung_cancer_treatment.1 }}
+            </td>
+            <td><label for="{{ form.lung_cancer_treatment_date.id_for_label }}">{{ form.lung_cancer_treatment_date.label }}</label></td>
+            <td>{{ form.lung_cancer_treatment_date }}</td>
+            <td><label for="{{ form.lung_cancer_treatment_info.id_for_label }}">{{ form.lung_cancer_treatment_info.label }}</label></td>
+            <td>{{ form.lung_cancer_treatment_info }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.lung_chest_care.id_for_label }}">Care related to a lung or chest condition</label></td>
+            <td>{{ form.lung_chest_care.0 }}
+              {{ form.lung_chest_care.1 }}
+            </td>
+            <td><label for="{{ form.lung_chest_care_date.id_for_label }}">{{ form.lung_chest_care_date.label }}</label></td>
+            <td>{{ form.lung_chest_care_date }}</td>
+            <td><label for="{{ form.lung_chest_care_info.id_for_label }}">{{ form.lung_chest_care_info.label }}</label></td>
+            <td>{{ form.lung_chest_care_info }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.other_cancer_diagnosis.id_for_label }}">Diagnosis of any other cancer</label></td>
+            <td>{{ form.other_cancer_diagnosis.0 }}
+              {{ form.other_cancer_diagnosis.1 }}
+            </td>
+            <td><label for="{{ form.other_cancer_diagnosis_date.id_for_label }}">{{ form.other_cancer_diagnosis_date.label }}</label></td>
+            <td>{{ form.other_cancer_diagnosis_date }}</td>
+            <td><label for="{{ form.other_cancer_diagnosis_info.id_for_label }}">{{ form.other_cancer_diagnosis_info.label }}</label></td>
+            <td>{{ form.other_cancer_diagnosis_info }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.other_condition_diagnosis.id_for_label }}">Diagnosis of any other medical condition</label></td>
+            <td>{{ form.other_condition_diagnosis.0 }}
+              {{ form.other_condition_diagnosis.1 }}
+            </td>
+            <td><label for="{{ form.other_condition_diagnosis_date.id_for_label }}">{{ form.other_condition_diagnosis_date.label }}</label></td>
+            <td>{{ form.other_condition_diagnosis_date }}</td>
+            <td><label for="{{ form.other_condition_diagnosis_info.id_for_label }}">{{ form.other_condition_diagnosis_info.label }}</label></td>
+            <td>{{ form.other_condition_diagnosis_info }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.heart_disease_heat_attack.id_for_label }}">Diagnosed with heart disease or had a heart attack</label></td>
+            <td>{{ form.heart_disease_heat_attack.0 }}
+              {{ form.heart_disease_heat_attack.1 }}
+            </td>
+            <td><label for="{{ form.heart_disease_heat_attack_date.id_for_label }}">{{ form.heart_disease_heat_attack_date.label }}</label></td>
+            <td>{{ form.heart_disease_heat_attack_date }}</td>
+            <td><label for="{{ form.heart_disease_heart_info.id_for_label }}">{{ form.heart_disease_heart_info.label }}</label></td>
+            <td>{{ form.heart_disease_heart_info }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.high_cholesterol.id_for_label }}">Diagnosed with high cholesterol</label></td>
+            <td>{{ form.high_cholesterol.0 }}
+              {{ form.high_cholesterol.1 }}
+            </td>
+            <td><label for="{{ form.high_cholestrol_date.id_for_label }}">{{ form.high_cholestrol_date.label }}</label></td>
+            <td>{{ form.high_cholestrol_date }}</td>
+            <td><label for="{{ form.high_cholerstrol_info.id_for_label }}">{{ form.high_cholerstrol_info.label }}</label></td>
+            <td>{{ form.high_cholerstrol_info }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.new_meds_cholestrol.id_for_label }}">Prescribed any new medications for your heart or cholesterol</label></td>
+            <td>{{ form.new_meds_cholestrol.0 }}
+              {{ form.new_meds_cholestrol.1 }}
+            </td>
+            <td><label for="{{ form.new_meds_cholestrol_date.id_for_label }}">{{ form.new_meds_cholestrol_date.label }}</label></td>
+            <td>{{ form.new_meds_cholestrol_date }}</td>
+            <td><label for="{{ form.new_meds_cholestrol_info.id_for_label }}">{{ form.new_meds_cholestrol_info.label }}</label></td>
+            <td>{{ form.new_meds_cholestrol_info }}</td>
+          </tr>
+        </table>
+                    
+      <h1>Annual Study Update - Part B</h1>
+      <h2>Part B. Cigarette Smoking Habits</h2>
+      <p>We would like to know about any changes in your cigarette smoking over the past year (12 months). Please answer the following questions to the best of your ability. </p>
+      <div>
+        <label for="{{ form.smoked_past_12_months.id_for_label }}">B1. In the past year (12 months), have you smoked any cigarettes? </label>
+        {{ form.smoked_past_12_months.0 }}
+          {{ form.smoked_past_12_months.1 }}
+        <label for="{{ form.smoked_past_12_months_date.id_for_label }}">If you stopped smoking in this time please record date stopped :</label>
+        {{ form.smoked_past_12_months_date }}
+      </div>
+      <div>
+        <label for="{{ form.current_smoker.id_for_label }}">B2. Do you CURRENTLY smoke cigarettes (one or more cigarettes per week)? </label>
+        {{ form.current_smoker.0 }}
+          {{ form.current_smoker.1 }}
+      </div>
+      <div>
+        <label for="{{ form.cigs_per_day.id_for_label }}">B3. How many cigarettes do you usually smoke per day, on average?</label>
+        {{ form.cigs_per_day.0 }}
+        
+      </div>
+      <div>
+        <label for="{{ form.cigs_per_day_amount.id_for_label }}">B4. Have you reduced the number of cigarettes you smoke per day in the last year?</label>
+        {{ form.cigs_per_day_amount.0 }}
+          {{ form.cigs_per_day_amount.1 }}
+      </div>
+      <label> B5. Has your family doctor done any of the following? </label>
+      <div>
+        <label for="{{ form.reduced_cigs_per_day.id_for_label }}">a.	Asked you about cigarette smoking? </label>
+        {{ form.reduced_cigs_per_day.0 }}
+          {{ form.reduced_cigs_per_day.1}}
+      </div>
+      <div>
+        <label for="{{ form.fam_doc_cig_smoking.id_for_label }}">Family Doctor Cigarette Smoking:</label>
+        {{ form.fam_doc_cig_smoking.0 }}
+        {{ form.fam_doc_cig_smoking.1}}
+      </div>
+      <div>
+        <label for="{{ form.fam_doc_stop_smoking.id_for_label }}">b.	Advised you to stop smoking cigarettes? </label>
+        {{ form.fam_doc_stop_smoking.0 }}
+          {{ form.fam_doc_stop_smoking.1}}
+      </div>
+      <div>
+          <label for="{{ form.fam_doc_stop_smoking.id_for_label }}">c.	Recommended using nicotine replacement therapy (patch, gum, inhaler, spray, or lozenges) and/or Zyban (Bupropion) to help you quit smoking cigarettes? </label>
+          {{ form.fam_doc_nic_replacement.0 }}
+          {{ form.fam_doc_nic_replacement.1}}
+      </div>
+      <div>
+          <label for="{{ form.fam_doc_stop_smoking.id_for_label }}">d.	Recommended counselling (classes, quit line) to help you quit smoking cigarettes? </label>
+          {{ form.fam_doc_counselling.0 }}
+          {{ form.fam_doc_counselling.1}}
+      </div>
+      <div>
+          <label for="{{ form.smoked_past_12_months.id_for_label }}">e.	Suggested a follow-up visit or phone call about quitting smoking cigarettes? </label>
+          {{ form.fam_doc_fuvisit.0 }}
+          {{ form.fam_doc_fuvisit.1}}
+      </div>
+      <label> B6. In the past year (12 months), have you done any of the following? </label>
+      <div>
+          <label for="{{ form.smoked_past_12_months_date.id_for_label }}">a.	Used these forms of nicotine replacement therapy? </label>
+          {{ form.past_yr_nic_replacement }}
+          
+      </div>
+      <div>
+          <label for="{{ form.current_smoker.id_for_label }}">b.	Used Zyban (Bupropion)?</label>
+          {{ form.past_yr_zyban.0 }}
+          {{ form.past_yr_zyban.1}}
+      </div>
+      <div>
+          <label for="{{ form.cigs_per_day.id_for_label }}">c. Used Champix (Varenicline)?</label>
+          {{ form.past_yr_champix.0 }}
+          {{ form.past_yr_champix.1}}
+      </div>
+      <div>
+          <label for="{{ form.cigs_per_day_amount.id_for_label }}">d.	Used e-cigarettes/vapes?</label>
+          {{ form.past_yr_ecigs.0 }}
+          {{ form.past_yr_ecigs.1}}
+      </div>
+      <div>
+          <label for="{{ form.reduced_cigs_per_day.id_for_label }}">With or Without Nicotine?</label>
+          {{ form.past_yr_ecigs_nic }}
+      </div>
+      <div>
+          <label for="{{ form.fam_doc_cig_smoking.id_for_label }}">e.	Participated in a cigarette smoking cessation program such as a quit smoking group or   counselling? </label>
+          {{ form.past_yr_cessation_program.0 }}
+          {{ form.past_yr_cessation_program.1}}
+      </div>
+      <div>
+          <label for="{{ form.fam_doc_stop_smoking.id_for_label }}">Smoking cessation program name? </label>
+          {{ form.past_yr_cessation_program_study }}
+
+      </div>
+      <div>
+            <label for="{{ form.fam_doc_stop_smoking.id_for_label }}">Smoking cessation program because you were referred by this study? </label>
+            {{ form.past_yr_smoke_councellor.0 }}
+              {{ form.past_yr_smoke_councellor.1}}
+      </div>
+      <div>
+            <label for="{{ form.fam_doc_stop_smoking.id_for_label }}">g.	Talked over the telephone with a smoking counsellor (e.g. QUITnow)?</label>
+            {{ form.past_yr_smoke_councellor_info }}
+      </div>
+      <div>
+          <label for="{{ form.fam_doc_cig_smoking.id_for_label }}">B7. In the past year (12 months), have you intentionally quit smoking cigarettes (not even a puff) for at least 24 hours?:</label>
+          {{ form.past_yr_quit_24hrs.0 }}
+          {{ form.past_yr_quit_24hrs.1}}
+
+          <label for="{{ form.fam_doc_stop_smoking.id_for_label }}">|       Times:</label>
+          {{ form.past_yr_quit_24hrs_length }}
+        </div>
+        <div>
+            <label for="{{ form.fam_doc_stop_smoking.id_for_label }}">Family Doctor Stop Smoking:</label>
+            {{ form.completed_form }}
+              
+        </div>
+        <div>
+            <label for="{{ form.fam_doc_stop_smoking.id_for_label }}">C1. Who completed this form? :</label>
+            {{ form.person_assisted }}
+        </div>
+        <div>
+            <label for="{{ form.smoked_past_12_months.id_for_label }}">Specify the person who assisted you (tick all that apply):</label>
+            {{ form.person_assisted_other }}
+        </div>
+        <div>
+            <label for="{{ form.smoked_past_12_months_date.id_for_label }}">Date you completed this form:</label>
+            {{ form.date_completed }}
+        </div>
+        <div>
+            <label for="{{ form.current_smoker.id_for_label }}">Checked by :</label>
+            {{ form.checked_by }}
+        </div>
+        <div>
+            <label for="{{ form.cigs_per_day.id_for_label }}">Checked by Date:</label>
+            {{ form.checked_by_date }}
+        </div>                   
+      <div class="form-footer">
+        <button class="btn-green right-margin" type="submit">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

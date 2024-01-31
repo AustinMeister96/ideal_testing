@@ -1,0 +1,83 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Blood Collection{% endblock %}
+
+{% block head %}
+<style>
+  .tab-content input[type="checkbox"] {
+  width: 15px;
+  margin-right: 15px; /* Adjust the spacing between checkbox and label */
+  }
+  .testing1{
+      display: flex;
+      align-items: center;
+  }
+
+  .short-entry-box{
+      width: 100px; 
+  }
+  .line-through{
+      border-bottom: 1px solid black;
+      padding-bottom: 10px;
+  }
+  .bold-and-large{
+      font-weight: bold;
+      font-size: 20px;
+  }
+  .form-row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;  /* Allow the items to wrap as needed */
+      margin-bottom: 15px;
+  }
+  .form-field {
+      flex: 1;
+      margin: 0 5px; /* Add some space around each field */
+      width: 10%;
+  }
+  .short-entry-box{
+      width: 100px; 
+  }
+  .btn {
+      float: right;
+
+  }
+  .label-class {
+  display: inline-block;
+  width: 200px;
+  }
+  .label-class2 {
+  display: inline-block;
+  width: 180 px;
+  }
+  .div-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .div-right{
+        padding-right: 25px;
+    }
+
+    .labels {
+        display: inline-block;
+        width: 180px;
+
+    
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+  <div id="main">
+    <div id="lab_processing" class="dataentry">
+
+    <p class="bold-and-large">Blood Collection</p>
+    <a href=" static/IDEAL_Optional_Questionnaire_Clean_JD_02_May_2023.docx" download>Download Filled Form</a>
+    <input  type="file" name="Upload PDF">
+
+        </div>
+  </div>
+{% endblock %}

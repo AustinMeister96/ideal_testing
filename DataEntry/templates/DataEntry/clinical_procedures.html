@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %}Clinical Procedures{% endblock %}
+
+{% block head %}
+<script>
+    function addInclusion() {
+        var participantId = document.getElementById("search").value;
+        var url = "/DataEntry/add_inclusion/" + encodeURIComponent(participantId);
+        window.location.href = url;
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="main">
+    <div id="lab_processing" class="dataentry">
+        <h1>Clinical Procedures</h1>  
+        <div class="form-grid mb-6" data-max="4">
+            <div class="form-grid repeater-container form-grid-heading !grid-cols-6">
+                <div>Type of Procedure</div>
+                <div>Date of Procedure</div>
+                <div>Clinical Staff Notified</div>
+                <div>Procedure Comments</div>
+                <div>Upload PDFs</div>
+                <div>Upload Files</div>
+            </div>
+            <div class="repeater-template form-grid !grid-cols-6">
+                <div class="input"><input type="text" placeholder="Type of Procedure"></div>
+                <div class="input"><input type="date"></div>
+                <div class="input"><input type="text" placeholder="Clinical Staff Notified"></div>
+                <div class="input"><input type="text" placeholder="Procedure Comments"></div>
+                <div class="input"><button onclick="openPDFFileManager()">Upload PDF</button></div>
+                <div class="input"><button onclick="openFileManager()">Upload File</button></div>
+            </div>
+            <div class="form-grid !grid-cols-6">
+                <div class="input"><input type="text" placeholder="Type of Procedure"></div>
+                <div class="input"><input type="date"></div>
+                <div class="input"><input type="text" placeholder="Clinical Staff Notified"></div>
+                <div class="input"><input type="text" placeholder="Procedure Comments"></div>
+                <div class="input"><button onclick="openPDFFileManager()">Upload PDF</button></div>
+                <div class="input"><button onclick="openFileManager()">Upload File</button></div>
+            </div>
+            <div class="form-grid !grid-cols-6">
+                <div class="input"><input type="text" placeholder="Type of Procedure"></div>
+                <div class="input"><input type="date"></div>
+                <div class="input"><input type="text" placeholder="Clinical Staff Notified"></div>
+                <div class="input"><input type="text" placeholder="Procedure Comments"></div>
+                <div class="input"><button onclick="openPDFFileManager()">Upload PDF</button></div>
+                <div class="input"><button onclick="openFileManager()">Upload File</button></div>
+            </div>
+            <div class="form-grid !grid-cols-6">
+                <div class="input"><input type="text" placeholder="Type of Procedure"></div>
+                <div class="input"><input type="date"></div>
+                <div class="input"><input type="text" placeholder="Clinical Staff Notified"></div>
+                <div class="input"><input type="text" placeholder="Procedure Comments"></div>
+                <div class="input"><button onclick="openPDFFileManager()">Upload PDF</button></div>
+                <div class="input"><button onclick="openFileManager()">Upload File</button></div>
+            </div>
+            <div class="form-grid !grid-cols-6">
+                <div class="input"><input type="text" placeholder="Type of Procedure"></div>
+                <div class="input"><input type="date"></div>
+                <div class="input"><input type="text" placeholder="Clinical Staff Notified"></div>
+                <div class="input"><input type="text" placeholder="Procedure Comments"></div>
+                <div class="input"><button onclick="openPDFFileManager()">Upload PDF</button></div>
+                <div class="input"><button onclick="openFileManager()">Upload File</button></div>
+            </div><div class="form-grid !grid-cols-6">
+                <div class="input"><input type="text" placeholder="Type of Procedure"></div>
+                <div class="input"><input type="date"></div>
+                <div class="input"><input type="text" placeholder="Clinical Staff Notified"></div>
+                <div class="input"><input type="text" placeholder="Procedure Comments"></div>
+                <div class="input"><button onclick="openPDFFileManager()">Upload PDF</button></div>
+                <div class="input"><button onclick="openFileManager()">Upload File</button></div>
+            </div>
+            <div class="form-grid !grid-cols-6">
+                <div class="input"><input type="text" placeholder="Type of Procedure"></div>
+                <div class="input"><input type="date"></div>
+                <div class="input"><input type="text" placeholder="Clinical Staff Notified"></div>
+                <div class="input"><input type="text" placeholder="Procedure Comments"></div>
+                <div class="input"><button onclick="openPDFFileManager()">Upload PDF</button></div>
+                <div class="input"><button onclick="openFileManager()">Upload File</button></div>
+            </div>
+            <div class="form-grid !grid-cols-6">
+                <div class="input"><input type="text" placeholder="Type of Procedure"></div>
+                <div class="input"><input type="date"></div>
+                <div class="input"><input type="text" placeholder="Clinical Staff Notified"></div>
+                <div class="input"><input type="text" placeholder="Procedure Comments"></div>
+                <div class="input"><button onclick="openPDFFileManager()">Upload PDF</button></div>
+                <div class="input"><button onclick="openFileManager()">Upload File</button></div>
+            </div>
+            <div class="form-grid !grid-cols-6">
+                <div class="input"><input type="text" placeholder="Type of Procedure"></div>
+                <div class="input"><input type="date"></div>
+                <div class="input"><input type="text" placeholder="Clinical Staff Notified"></div>
+                <div class="input"><input type="text" placeholder="Procedure Comments"></div>
+                <div class="input"><button onclick="openPDFFileManager()">Upload PDF</button></div>
+                <div class="input"><button onclick="openFileManager()">Upload File</button></div>
+            </div>
+        </div>
+        <script>
+            function openPDFFileManager() {
+                console.log("Opening PDF file manager...");
+            }
+        
+            function openFileManager() {
+                console.log("Opening file manager...");
+            }
+        </script>
+        <button class="add-row-button btn-blue-outline icon-add" onclick="addRow()">Add Row</button>
+                 
+            <script>
+                function addRow() {
+                    var table = document.querySelector("table");
+                    var newRow = table.insertRow(-1);
+            
+                    for (var i = 0; i < 4; i++) {
+                        var newCell = newRow.insertCell(i);
+                        var newInput = document.createElement("input");
+                        newInput.type = "text";
+                        newCell.appendChild(newInput);
+                    }
+             
+                    var uploadPDFCell = newRow.insertCell(4);
+                    var uploadPDFButton = document.createElement("button");
+                    uploadPDFButton.textContent = "Upload PDF";
+                    uploadPDFButton.onclick = openPDFFileManager;
+                    uploadPDFCell.appendChild(uploadPDFButton);
+            
+                    var uploadFileCell = newRow.insertCell(5);
+                    var uploadFileButton = document.createElement("button");
+                    uploadFileButton.textContent = "Upload File";
+                    uploadFileButton.onclick = openFileManager;
+                    uploadFileCell.appendChild(uploadFileButton);
+                }
+        </script>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Participant Search{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div id="main">
+    <div id="lab_processing" class="dataentry">
+      <h1>Participant Search</h1>
+      <div id="inclusionFormContainer">
+        <label class="mb-2 block"><strong>Enter the 7-digit participant number</strong></label>
+        <form id="search-form" class="relative w-full max-w-sm">
+          <input type="text" id="number-input" class="rounded-sm pr-10 w-full" placeholder="Ex. 1234567">
+          <button type="button" id="search-button" type="submit" class="absolute right-3 top-3" title="Search"><svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></button>
+        </form>
+      </div>
+    </div>
+  </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const numberInput = document.getElementById('number-input');
+    const searchButton = document.getElementById('search-button');
+
+    function redirectToNewLocation() {
+      const number = numberInput.value.trim();
+      if (/^\d{7}$/.test(number)) {
+        fetch(`/check_participant/${number}`)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data); 
+            if (data.exists) {
+              const newLocation = window.location.pathname + number;
+              window.location.href = newLocation;
+            } else {
+              alert(data.message || 'Participant number not found in the database.');
+            }
+          })
+  .catch(error => {
+    console.error('Error:', error);
+          });
+      } else {
+        alert('Please enter a valid 7-digit integer.');
+      }
+    }
+
+    if (numberInput && searchButton) {
+      searchButton.addEventListener('click', redirectToNewLocation);
+    }
+
+    numberInput.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        redirectToNewLocation();
+      }
+    });
+  });
+</script>
+{% endblock %}

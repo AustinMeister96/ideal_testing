@@ -1,0 +1,432 @@
+{% extends 'base.html' %}
+
+{% block title %}Questionnaires: Mandatory Part A-B{% endblock %}
+
+{% block head %}
+<script>
+    $(document).ready(function() {
+        $('#date_of_birth').on('change', function() {
+            var dob = new Date($(this).val());
+            var today = new Date();
+            var age = today.getFullYear() - dob.getFullYear();
+            var monthDiff = today.getMonth() - dob.getMonth();
+
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                age--; 
+            }
+
+            $('#current_age').val(age);
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+
+        $("#id_gender_identity_other").hide();
+        $("label[for='id_gender_identity_other']").hide();
+        $("#id_gender_identity").change(function() {
+            var selectedValue = $(this).val();
+    
+            if (selectedValue === "Other") {
+                $("#id_gender_identity_other").show();
+                $("label[for='id_gender_identity_other']").show();
+            } else {
+                $("#id_gender_identity_other").hide();
+                $("label[for='id_gender_identity_other']").hide();
+            }
+        
+        
+        });
+
+        
+        $("#id_ethnicity_other").hide();
+        $("label[for='id_ethnicity_other']").hide();
+        $("#id_ethnicity").change(function() {
+            var selectedValue = $(this).val();
+
+            if (selectedValue === "Other") {
+                $("#id_ethnicity_other").show();
+                $("label[for='id_ethnicity_other']").show();
+            } else {
+                $("#id_ethnicity_other").hide();
+                $("label[for='id_ethnicity_other']").hide();
+            }
+        
+        
+        });
+
+        $("#id_year_moved_to_canada").hide();
+        $("label[for='id_year_moved_to_canada']").hide();
+
+        $("#id_birthplace").hide();
+        $("label[for='id_birthplace']").hide();
+        $("#id_born_in_canada").change(function() {
+            var selectedValue = $(this).val();
+            if (selectedValue === "No") {
+                $("#id_year_moved_to_canada").show();
+                $("label[for='id_year_moved_to_canada']").show();
+                $("#id_birthplace").show();
+                $("label[for='id_birthplace']").show();
+
+            } else {
+                $("#id_year_moved_to_canada").hide();
+                $("label[for='id_year_moved_to_canada']").hide();
+                $("#id_birthplace").hide();
+                $("label[for='id_birthplace']").hide();
+            }
+        
+        
+        });
+
+        $("#id_highest_education_lvl_other").hide();
+        $("label[for='id_highest_education_lvl_other']").hide();
+        $("#id_highest_education_lvl").change(function() {
+            var selectedValue = $(this).val();
+            if (selectedValue === "Other") {
+                $("#id_highest_education_lvl_other").show();
+                $("label[for='id_highest_education_lvl_other']").show();
+            } else {
+                $("#id_highest_education_lvl_other").hide();
+                $("label[for='id_highest_education_lvl_other']").hide();
+            }
+        
+        
+        });
+
+        $(document).ready(function() {
+        var formCount = 1;
+
+        $('#add-row-btn').click(function() {
+                var newForm = `
+                <p><label for="id_form-${formCount}-biological_rel">Biological Relative:</label>
+                <input type="text" name="form-${formCount}-biological_rel" required id="id_form-${formCount}-biological_rel"></p>
+                
+                <p><label for="id_form-${formCount}-type_of_cancer">Type of Cancer:</label>
+                <input type="text" name="form-${formCount}-type_of_cancer" required id="id_form-${formCount}-type_of_cancer"></p>
+                
+                <p><label for="id_form-${formCount}-age_diagnosis">Age at Diagnosis:</label>
+                <input type="text" name="form-${formCount}-age_diagnosis" required id="id_form-${formCount}-age_diagnosis"></p>
+            `;
+            $('#cancer-history-forms').append(newForm);
+            formCount++;
+        });
+        $(document).on('click', '.remove-row-btn', function() {
+            $(this).closest('.cancer-history-form-row').remove();
+        });
+        $('#remove-most-recent-btn').click(function() {
+            $('.cancer-history-form-row').last().remove();
+        });
+    });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<div id="main">
+    <div id="lab_processing" class="dataentry">
+        <h1>Questionnaires: Mandatory Part A-B</h1>
+        <div class="print:hidden text-right mb-3">
+          <button onclick="window.print();" class="btn-blue btn-sm icon-print" title="Download PDF"></button>
+          <a href="{% url 'add_mandatory_questionaire' participant_id %}?generate_csv=true" class="btn-blue btn-sm icon-csv" title="Download CSV"></a>
+        </div>
+        <form method="POST" class="in-line" id="yourFormId">
+            {% csrf_token %}
+            <input type="hidden" id='participant_number' name="participant_num" value="{{ participant_id }}">
+            <div class="form-grid">
+                <div class="form-grid field-group">
+                    <div class="col-span-4 field">
+                        <label>Upload Scanned Form:</label>
+                        <div class="input">
+                            {{ form.form_pdf_upload }}
+                        </div>
+                    </div>
+                    <div class="col-span-8">
+                        <p><strong>Uploaded Files</strong></p>
+                        <ul class="list-disc mt-3">
+                            {% for file in uploaded_files %}
+                                <li>
+                                    <a href="{{ file.mandatory_questionaire.url }}" download>{{ file.mandatory_questionaire.name }}</a>
+                                </li>
+                            {% empty %}
+                                <li>No files uploaded yet.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="field col-span-3">
+                        <label  class=initial-section-labels for="{{ form.visit_date.id_for_label }}">Visit Date</label>
+                        <div class="input">
+                            {{ form.visit_date }}
+                        </div>
+                    </div>
+                    <div class="field col-span-3">
+                        <label class=initial-section-labels for="{{ form.postal_code.id_for_label }}">Postal Code</label>
+                        <div class="input">
+                            {{ form.postal_code }}
+                        </div>
+                    </div>
+                    <div class="field col-span-3">
+                        <label for="{{ form.date_of_birth.id_for_label }}" class="initial-section-labels">Date of Birth</label>
+                        <div class="input">
+                            {{ form.date_of_birth }}
+                        </div>
+                    </div>
+                    <div class="field col-span-3">
+                        <label for="{{ form.current_age.id_for_label }}" class="initial-section-labels">Current Age</label>
+                        <div class="input">
+                            {{form.current_age}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-grid mt-0">
+                    <div class="field col-span-3">
+                        <label class=initial-section-labels-long for="{{ form.current_height.id_for_label }}">Current Height</label>
+                        <div class="input with-affix">
+                            {{ form.current_height }}
+                            <div class="affix">
+                                {{form.current_height_unit.1}}
+                                {{form.current_height_unit.2}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field col-span-3">
+                        <label class=initial-section-labels-long for="{{ form.current_weight.id_for_label }}">Current Weight</label>
+                        <div class="input with-affix">
+                            {{ form.current_weight }}
+                            <div class="affix">
+                                {{ form.current_weight_unit.1 }}
+                                {{ form.current_weight_unit.2 }}
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Sex at Birth -->
+                    <div class="field col-span-3">
+                        <label class="initial-section-labels" for="{{ form.sex_birth.id_for_label }}" class="text-">Sex at Birth</label>
+                        <div class="input">
+                            {{ form.sex_birth }}
+                        </div>
+                    </div>
+                    <div class="field col-span-3">
+                        <label class="initial-section-labels" for="{{ form.gender_identity.id_for_label }}">Gender Identity</label>
+                        <div class="input">
+                            {{ form.gender_identity }}
+                            <label class="other initial-section-labels-long" for="{{ form.gender_identity_other.id_for_label }}">If other, please specify</label>
+                            {{form.gender_identity_other}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h1>PART A. General Demographic and Health Information</h1>
+            <div class="form-grid">
+                <!-- Ethnicity -->
+                <div class="col-span-4 field field-stretch-vertical">
+                    <label for="{{ form.ethnicity.id_for_label }}">1. What ethnicity do you consider yourself to be? </label>
+                    <div class="input">
+                        {{ form.ethnicity }}
+                        <label for="{{ form.ethnicity_other.id_for_label }}">Ethnicity (Other)</label>
+                        {{ form.ethnicity_other }}
+                    </div>
+                </div>
+            
+                <!-- Born in Canada -->
+                <div class="col-span-4 field field-stretch-vertical">
+                    <label for="{{ form.born_in_canada.id_for_label }}">2. Were you born in Canada?</label>
+                    <div class="input">
+                        {{ form.born_in_canada }}
+                        <label class="other" for="{{ form.year_moved_to_canada.id_for_label }}">Year Moved to Canada</label>
+                        {{ form.year_moved_to_canada }}
+                        <label class="other" for="{{ form.birthplace.id_for_label }}">Birthplace</label>
+                        {{ form.birthplace }}
+                    </div>
+                </div>
+            
+                <!-- Highest Education Level -->
+                <div class="col-span-4 field field-stretch-vertical">
+                    <label for="{{ form.highest_education_lvl.id_for_label }}">3. What is the highest level of education you have completed?</label>
+                    <div class="input">
+                        {{ form.highest_education_lvl }}
+                        <label class="other" for="{{ form.highest_education_lvl_other.id_for_label }}">Highest Education Level (Other)</label>
+                        {{ form.highest_education_lvl_other }}
+                    </div>
+                </div>       
+                <div class="field-group bg-blue-100">
+                    <!-- COPD -->
+                    <div class="col-span-full">
+                        <p><strong>4. Has a physician ever told you that you have any of the following conditions?</strong></p>
+                    </div>
+                    <div class="col-span-2 field">
+                        <label class="yes_no" for="{{ form.copd.id_for_label }}">COPD</label>
+                        <div class="input input-list">
+                            {{ form.copd.0 }}
+                            {{ form.copd.1 }}
+                        </div>
+                    </div>
+                    <div class="col-span-2 field">
+                        <label class="yes_no" for="{{ form.emphysema.id_for_label }}">Emphysema</label>
+                        <div class="input input-list">
+                            {{ form.emphysema.0 }}
+                            {{ form.emphysema.1 }}
+                        </div>
+                    </div>
+                    <div class="col-span-2 field">
+                        <label class="yes_no" for="{{ form.chronic_bronchitis.id_for_label }}">Chronic Bronchitis</label>
+                        <div class="input input-list">
+                            {{ form.chronic_bronchitis.0 }}
+                            {{ form.chronic_bronchitis.1 }}
+                        </div>
+                    </div>
+                    <div class="col-span-2 field">
+                        <label class="yes_no" for="{{ form.asthma.id_for_label }}">Asthma</label>
+                        <div class="input input-list">
+                            {{ form.asthma.0 }}
+                            {{ form.asthma.1 }}
+                        </div>
+                    </div>
+                    <div class="col-span-2 field">
+                        <label class="yes_no" for="{{ form.diabetes.id_for_label }}">Diabetes</label>
+                        <div class="input input-list">
+                            {{ form.diabetes.0 }}
+                            {{ form.diabetes.1 }}
+                        </div>
+                    </div>
+                    <div class="col-span-2 field">
+                        <label class="yes_no" for="{{ form.hypertension.id_for_label }}">Hypertension</label>
+                        <div class="input input-list">
+                            {{ form.hypertension.0 }}
+                            {{ form.hypertension.1 }}
+                        </div>
+                    </div>
+                    <div class="col-span-2 field">
+                        <label class="yes_no" for="{{ form.tuberculosis.id_for_label }}">Tuberculosis</label>
+                        <div class="input input-list">
+                            {{ form.tuberculosis.0 }}
+                            {{ form.tuberculosis.1 }}
+                        </div>
+                    </div>
+                    <div class="col-span-2 field">
+                        <label class="yes_no" for="{{ form.adult_pneumonia.id_for_label }}">Adult Pneumonia</label>
+                        <div class="input input-list">
+                            {{ form.adult_pneumonia.0 }}
+                            {{ form.adult_pneumonia.1 }}
+                        </div>
+                    </div>
+                    <div class="col-span-2 field">
+                        <label class="yes_no" for="{{ form.pulmonary_fibrosis.id_for_label }}">Pulmonary Fibrosis</label>
+                        <div class="input input-list">
+                            {{ form.pulmonary_fibrosis.0 }}
+                            {{ form.pulmonary_fibrosis.1 }}
+                        </div>
+                    </div>
+                    <div class="col-span-2 field">
+                        <label class="yes_no" for="{{ form.hiv.id_for_label }}">HIV</label>
+                        <div class="input input-list">
+                            {{ form.hiv.0 }}
+                            {{ form.hiv.1 }}
+                        </div>
+                    </div>
+                    <div class="col-span-4 field">
+                        <label class="yes_no" for="{{ form.long_covid.id_for_label }}">Long COVID</label>
+                        <div class="input input-list">
+                            {{ form.long_covid.0 }}
+                            {{ form.long_covid.1 }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Personal Cancer History -->
+                <div class="form-grid field-group field-toggler checkbox-toggler" data-visible-value="True">
+                    <div class="col-span-full field">
+                        <label  for="{{ form.personal_cancer_history.id_for_label }}">5. Do you have a personal history of cancer?</label>
+                        <div class="input input-list toggle">
+                            {{ form.personal_cancer_history.0 }}
+                            {{ form.personal_cancer_history.1 }}
+                        </div>
+                    </div>
+                    <div class="col-span-4 field toggle-target">
+                        <label class="other" for="{{ form.personal_cancer_history_youngest_age.id_for_label }}">Personal Cancer History (Youngest Age)</label>
+                        <div class="input">
+                            {{ form.personal_cancer_history_youngest_age }}
+                        </div>
+                    </div>
+                    <div class="col-span-4 field toggle-target">
+                        <label class="other" for="{{ form.personal_history_cancer_type.id_for_label }}">Personal History Cancer Type</label>
+                        <div class="input">
+                            {{ form.personal_history_cancer_type }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Number of Sisters -->
+            <h1>PART B. Family History</h1>
+            <div class="form-grid !grid-cols-15">
+                <div class="col-span-3 field">
+                    <label for="{{ form.num_sisters.id_for_label }}">Number of Sisters</label>
+                    <div class="input">
+                        {{ form.num_sisters }}
+                    </div>
+                </div>
+                <div class="col-span-3 field">
+                    <label for="{{ form.num_half_sisters.id_for_label }}">Number of Half Sisters</label>
+                    <div class="input">
+                        {{ form.num_half_sisters }}
+                    </div>
+                </div>
+                <div class="col-span-3 field">
+                    <label for="{{ form.num_brothers.id_for_label }}">Number of Brothers</label>
+                    <div class="input">
+                        {{ form.num_brothers }}
+                    </div>
+                </div>
+                <div class="col-span-3 field">
+                    <label for="{{ form.num_half_brothers.id_for_label }}">Number of Half Brothers</label>
+                    <div class="input">
+                        {{ form.num_half_brothers }}
+                    </div>
+                </div>
+                <!-- Number of Half Brothers -->
+                <div class="col-span-3 field">
+                    <label for="{{ form.children.id_for_label }}">How many children do you have? </label>
+                    <div class="input">
+                        {{ form.children }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-footer">
+                <a href="{% url 'add_inclusion_participant' participant_id %}" class="btn-blue-outline icon-previous">Previous</a>
+                <button type="submit" class="btn-blue">Save</button>
+                <a id="saveAndContinue" href="{% url 'add_mandatory_questionaire_c' participant_id %}" class="btn-green icon-next">Continue</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#addRelativeButton').click(function () {
+            let formIndex = $('#id_form-TOTAL_FORMS').val();
+            let newFormHTML = $('#formsetContainer').children().last().html().replace(/__prefix__/g, formIndex);
+            let newFormDiv = $('<div class="form-row">').html(newFormHTML);
+            $('#formsetContainer').append(newFormDiv);
+            $('#id_form-TOTAL_FORMS').val(parseInt(formIndex) + 1);
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const saveAndContinueButton = document.getElementById("saveAndContinue");
+    
+      saveAndContinueButton.addEventListener("click", function (event) {
+        event.preventDefault(); 
+        const form = document.getElementById("yourFormId");
+        form.submit();
+        const linkURL = saveAndContinueButton.getAttribute("href");
+        window.location.href = linkURL;
+      });
+    });
+    </script>
+{% endblock %}

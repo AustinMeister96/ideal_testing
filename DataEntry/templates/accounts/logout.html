@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html class="h-full">
+    <head>
+        <title>Logout | IDEAL</title>
+        {% load static tailwind_tags %}
+        {% tailwind_css %}
+    </head>
+    <body class="text-md font-sans bg-blue-800 h-full flex justify-center items-center">
+        <div class="login-container bg-blue max-w-[400px] text-white rounded p-10 text-center shadow-xl">
+            {% if request.user.is_authenticated %}
+                <img class="w-2/3 h-auto logo inline-block mb-10" src="/static/ideal-logo-blue-white.png" alt="Logo">
+                <form method="POST">{% csrf_token %}
+                    <p class="mb-8 text-lg">Are you sure you want to logout?</p>
+                    <button type="submit" class="btn-green">Yes, log me out</button>
+                </form>
+            {% else %}
+                <p class="text-lg">You're not logged in. Would you like to <a href="/login/" class="underline hover:no-underline">login</a>?</p>    
+            {% endif %}        
+        </div>
+    </body>
+</html>

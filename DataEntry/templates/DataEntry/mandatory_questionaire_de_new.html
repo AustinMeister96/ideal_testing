@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+
+{% block title %}Part C. Smoking History{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div id="main">
+    <div id="lab_processing" class="dataentry">
+        <h1>PART D. Second-Hand Smoke Exposure</h1>
+        <div class="print:hidden float-right mb-3">
+            <button onclick="window.print();" class="btn-blue btn-sm icon-print" title="Download PDF"></button>
+            <a href="{% url 'add_mandatory_questionaire_de' participant_id %}?generate_csv=true" class="btn-blue btn-sm icon-csv" title="Download CSV"></a>
+        </div>
+        <form method="POST" action="">
+            <input type="hidden" name="participant_num" value="{{ participant_id }}">
+            {% csrf_token %}
+            
+            <div class="form-grid">
+                <div class="field col-span-full">
+                    <label>1. In your lifetime, you have considered your second-hand smoke exposure to be: </label>
+                    <div class="input">
+                        {{ form.second_hand_smoke }}
+                    </div>
+                </div>
+                <div class="form-grid !grid-cols-1">
+                    <div class="field">
+                        <label>2. At any time in your life, have you been around someone else's tobacco smoke at least once per week for 1 year or longer?  </label>
+                        <div class="input input-list">
+                            {{ form.second_hand_1yr.0 }}
+                            {{ form.second_hand_1yr.1 }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label >(b) Where have you been around someone elses tobacco smoke?</label>
+                        <div class="input input-list">
+                            {{ form.second_hand_home.1 }}
+                            <label for="id_second_hand_work">
+                                {{ form.second_hand_work }}
+                                At Work?
+                            </label>
+                            <label for="id_second_hand_leisure">
+                                {{ form.second_hand_leisure }}
+                                At leisure? (visiting friends, bars)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label >(c) On average, how often were you around other peoples smoke?</label>
+                        <div class="input input-list">
+                            {{ form.second_hand_daily.1 }}
+                            {{ form.second_hand_daily.2 }}
+                            {{ form.second_hand_daily.3 }}
+                            {{ form.second_hand_daily.4 }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>(d) On average, how many hours of exposure did you encounter for each day you were exposed?  </label>
+                        <div class="input input-list">
+                            {{ form.second_hand_exposure_time.1 }}
+                            {{ form.second_hand_exposure_time.2 }}
+                            {{ form.second_hand_exposure_time.3 }}
+                            {{ form.second_hand_exposure_time.4 }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>(e) How many years were you exposed in total?  </label>
+                        <div class="input">
+                            {{ form.second_hand_yrs }}
+                        </div>
+                    </div>
+                </div>
+                <div class="field col-span-full">
+                    <label>3. As a child and youth (18 years and under), was your exposure to secondhand smoke at home:  </label>
+                    <div class="input">
+                        {{ form.second_hand_youth }}
+                    </div>
+                </div>
+            </div>
+            <h1>PART E. Alcohol</h1>
+            <div class="form-grid">
+                <div class="field col-span-full">
+                    <label>1.	Have you ever had a drink of alcohol at least once per week for 1 year or longer?</label>
+                    <div class="input input-list">
+                        {{ form.alcohol.0 }}
+                        {{ form.alcohol.1 }}
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-grid repeater-container form-grid-heading !grid-cols-5">
+                        <label>From Age (years)</label>
+                        <label>To Age (years)</label>
+                        <label>Beer (cans or bottles/week)</label>
+                        <label>Wine (6 ounce glasses/week)</label>
+                        <label>Spirit or hard liquor (ounces/week)</label>
+                    </div>
+                    <div class="form-grid !grid-cols-5">
+                        <div class="field"><div class="input">{{ form.alcohol_from_age1 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_to_age1 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_beer1 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_wine1 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_liquor1 }}</div></div>
+                    </div>
+                    <div class="form-grid !grid-cols-5">
+                        <div class="field"><div class="input">{{ form.alcohol_from_age2 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_to_age2 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_beer2 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_wine2 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_liquor2 }}</div></div>
+                    </div>
+                    <div class="form-grid !grid-cols-5">
+                        <div class="field"><div class="input">{{ form.alcohol_from_age3 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_to_age3 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_beer3 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_wine3 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_liquor3 }}</div></div>
+                    </div>
+                    <div class="form-grid !grid-cols-5">
+                        <div class="field"><div class="input">{{ form.alcohol_from_age4 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_to_age4 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_beer4 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_wine4 }}</div></div>
+                        <div class="field"><div class="input">{{ form.alcohol_liquor4 }}</div></div>
+                    </div>
+                </div>
+                <div class="field col-span-4">
+                    <label>2. Do you currently drink alcohol at least once per week?</label>
+                    <div class="input input-list">
+                        {{ form.alcohol_current.0 }}
+                        {{ form.alcohol_current.1 }}
+                    </div>
+                </div>
+                <div class="field col-span-8">
+                    <label>Stopped at age:</label>
+                    <div class="input">
+                        {{ form.alcohol_stop_age }}
+                    </div>
+                </div>
+            </div>            
+        
+            <h1>PART F. Medications</h1>
+            <h2>Are you currently using any of the following medications or drugs?</h2>
+            <div class="form-grid">
+                <div class="form-grid">
+                    <div class="field col-span-4">
+                        <label class="label-binary">1. Inhaled corticosteroids such as, beclomethasone, fluticasone, budesonide?</label>
+                        <div class="input input-list">
+                            {{ form.inhaled_drugs.1 }}
+                            {{ form.inhaled_drugs.2 }}
+                            {{ form.inhaled_drugs.3 }}
+                        </div>
+                    </div>
+                    <div class="field col-span-4">
+                        <label class="col-span-full">For how long have you used it?</label>
+                        <div class="input input-group !grid-cols-3">
+                            <div>
+                                {{ form.inhaled_drugs_day }}<br/>
+                                <small>Days</small>
+                            </div>
+                            <div>
+                                {{ form.inhaled_drugs_month }}<br/>
+                                <small>Months</small>
+                            </div>
+                            <div>
+                                {{ form.inhaled_drugs_year }}<br/>
+                                <small>Years</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field col-span-4">
+                        <label >How often have you used this medication? </label>
+                        <div class="input">
+                            {{ form.inhaled_drugs_freq }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="field col-span-4">
+                        <label class="label-binary">2. Bronchodilators such as salbutamol, formeterol, salmeterol, ipratopium, tiotropium?       </label>
+                        <div class="input input-list">
+                            {{ form.bronchodialators.1 }}
+                            {{ form.bronchodialators.2 }}
+                            {{ form.bronchodialators.3 }}
+                        </div>
+                    </div>
+                    <div class="field col-span-4">
+                        <label class="col-span-full">For how long have you used it?</label>
+                        <div class="input !grid !grid-cols-3 !gap-4">
+                            <div>
+                                {{ form.bronchodialators_day }}<br/>
+                                <small>Days</small>
+                            </div>
+                            <div>
+                                {{ form.bronchodialators_month }}<br/>
+                                <small>Months</small>
+                            </div>
+                            <div>
+                                {{ form.bronchodialators_year }}<br/>
+                                <small>Years</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field col-span-4">
+                        <label >How often have you used this medication? </label>
+                        <div class="input">
+                            {{ form.bronchodialators_freq }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="field col-span-4">
+                        <label class="label-binary">3. Statins (eg. Lipitor, Zocor, Pravachol, Mevacor or Crestor) </label>
+                        <div class="input input-list">
+                            {{ form.statins.1 }}
+                            {{ form.statins.2 }}
+                            {{ form.statins.3 }}
+                        </div>
+                    </div>
+                    <div class="field col-span-4">
+                        <label class="col-span-full">For how long have you used it?</label>
+                        <div class="input !grid !grid-cols-3 !gap-4">
+                            <div>
+                                {{ form.statins_day }}<br/>
+                                <small>Days</small>
+                            </div>
+                            <div>
+                                {{ form.statins_month }}<br/>
+                                <small>Months</small>
+                            </div>
+                            <div>
+                                {{ form.statins_year }}<br/>
+                                <small>Years</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field col-span-4">
+                        <label >How often have you used this medication? </label>
+                        <div class="input">
+                            {{ form.statins_freq }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="field col-span-4">
+                        <label class="label-binary">4. Metformin </label>
+                        <div class="input input-list">
+                            {{ form.metformin.1 }}
+                            {{ form.metformin.2 }}
+                            {{ form.metformin.3 }}
+                        </div>
+                    </div>
+                    <div class="field col-span-4">
+                        <label class="col-span-full">For how long have you used it?</label>
+                        <div class="input !grid !grid-cols-3 !gap-4">
+                            <div>
+                                {{ form.metformin_day }}<br/>
+                                <small>Days</small>
+                            </div>
+                            <div>
+                                {{ form.metformin_month }}<br/>
+                                <small>Months</small>
+                            </div>
+                            <div>
+                                {{ form.metformin_year }}<br/>
+                                <small>Years</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field col-span-4">
+                        <label >How often have you used this medication? </label>
+                        <div class="input">
+                            {{ form.metformin_freq }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h1>PART G. Occupational History</h1>
+            <div class="form-grid">
+                <div class="form-grid">
+                    <div class="field col-span-6">
+                        <label>1. Which of these categories best describes your current working situation? </label>
+                        <div class="input">
+                            {{ form.current_working_situation }}
+                        </div>
+                    </div>
+                    <div class="field col-span-6">
+                        <label >Other - Please specify:</label>
+                        <div class="input">
+                            {{ form.current_working_situation_other }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="field col-span-6">
+                        <label>2. (a) In what occupation have you worked the longest during your adult life? </label>
+                        <div class="input">
+                            {{ form.occupation_longest }}
+                        </div>
+                    </div>
+                    <div class="field col-span-3">
+                        <label >(b) What were your usual activities and duties in this occupation? </label>
+                        <div class="input">
+                            {{ form.occupation_longest_activities }}
+                        </div>
+                    </div>
+                    <div class="field col-span-3">
+                        <label >(c) How many years have you worked in this occupation?  </label>
+                        <div class="input">
+                            {{ form.occupation_longest_years }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="field col-span-6">
+                        <label>3. Do you think you've been exposure to fumes, dusts, chemicals or agents that might cause cancer at work or in the environment, for example, to asbestos, chromium, diesel fumes or others for more than one year? </label>
+                        <div class="input input-list">
+                            {{ form.occupation_exposure.0 }}
+                            {{ form.occupation_exposure.1 }}
+                        </div>
+                    </div>
+                    <div class="field col-span-3">
+                        <label >What fumes, dusts, chemicals or agents have you been exposed to? </label>
+                        <div class="input">
+                            {{ form.occupation_fumes }}
+                        </div>
+                    </div>
+                    <div class="field col-span-3">
+                        <label >How many years have you been exposed? </label>
+                        <div class="input">
+                            {{ form.occupation_years }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-footer">
+                <a type="button" class="btn-blue-outline icon-previous right-margin" href="{% url 'add_mandatory_questionaire_c' participant_id %}">Previous</a>
+                <button type="submit" class="btn-green right-margin">Save</button>
+                <a href="{% url 'add_exposure_form' participant_id %}" class="btn-blue icon-next right-margin">Continue</a>
+            </div>
+        </form> 
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block title %}Participant Home{% endblock %}
+
+{% block head %}
+<style>
+  #reciva_entry {
+      padding-bottom: 10px;
+  }
+  .tab-content input[type="checkbox"] {
+  width: 15px;
+  margin-right: 15px; 
+  }
+  .testing1{
+      display: flex;
+      align-items: center;
+  }
+  .form-group2 {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+  }
+  .form-group3 {
+      flex: 1;
+      margin: 0 5px; 
+      width: 10%;
+  }
+  .form-group {
+      flex: 1;
+      margin: 0 5px; 
+      width: 10%;
+  }
+  .short-entry-box{
+      width: 100px; 
+  }
+  .line-through{
+      border-bottom: 1px solid black;
+      padding-bottom: 10px;
+  }
+  .bold-and-large{
+      font-weight: bold;
+      font-size: 20px;
+  }
+  .form-row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+  }
+  .form-field {
+      flex: 1;
+      margin: 0 5px; 
+      width: 10%;
+  }
+  .short-entry-box{
+      width: 100px; 
+  }
+  .btn {
+      float: right;
+
+  }
+  .label-class {
+  display: inline-block;
+  width: 200px;
+  }
+  .label-class2 {
+  display: inline-block;
+  width: 180 px;
+  }
+  .in-line {
+        text-align: right;
+    }
+
+    .in-line input[type="text"] {
+        width: 200px;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .in-line button {
+        display: inline-block;
+        vertical-align: top;
+    }
+    .lower-marg {
+        margin-bottom: 20px;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+</style>
+<script>
+    function addInclusion() {
+        var participantId = document.getElementById("search").value;
+        var url = "/DataEntry/add_inclusion/" + encodeURIComponent(participantId);
+        window.location.href = url;
+    }
+</script>
+{% endblock %}
+{% block content %}
+  <div id="main">
+    <div id="lab_processing" class="dataentry">
+        <h1 class="flex flex-row items-center justify-between">
+            <span class="grow">Participant History</span>
+            <div class="!grow-0 field field-inline text-md items-center !-my-1">
+                <label for="studySelect" class="whitespace-nowrap">Select a study:</label>
+                <div class="input text-black">
+                    <select id="studySelect">
+                        <option value="IDEAL">IDEAL</option>
+                        <option value="New Study 1">New Study 1</option>
+                        <option value="New Study 2">New Study 2</option>
+                    </select>
+                </div>
+            </div>
+        </h1>
+        <div class="container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Type of Update</th>
+                        <th>Form</th>
+                        <th>Date Created</th>
+                        <th>Date Modified</th>
+                    </tr>
+                </thead>
+                    <tr>
+                        <th></th>
+                        <th>Status</th>
+                        <th>N/A</th>
+                        <th>Inclusion</th>
+                        <th>N/A</th>
+                        <th>N/A</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Type of Update</th>
+                        <td>Not Created</td>
+                        <td>N/A</td>
+                        <td>Mandatory Questionnaire Part A-B</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <th>Form</th>
+                        <td>Not Created</td>
+                        <td>N/A</td>
+                        <td>Mandatory Questionnaire Part C</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <th>Date Created</th>
+                        <td>Not Created</td>
+                        <td>N/A</td>
+                        <td>Mandatory Questionnaire Part D-E</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <th>Date Modified</th>
+                        <td>Not Created</td>
+                        <td>N/A</td>
+                        <td>Optional Questionaire</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                    </tr>
+                </tbody>
+            </table>            
+        </div>
+    </div>
+</div>
+{% endblock %}

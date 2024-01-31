@@ -1,0 +1,326 @@
+{% extends 'base.html' %}
+
+{% block title %}Blood Collection{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div id="main">
+    <div id="lab_processing" class="dataentry">
+        <h1>Blood Collection</h1>
+        <a href=" static/IDEAL_Optional_Questionnaire_Clean_JD_02_May_2023.docx" class="btn-blue-outline" download>Download Filled Form</a>
+        <br/><br/>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" id='participant_id' name="participant_id" value="{{ participant_id }}">
+            <div class="form-grid !grid-cols-5">
+                <div class="field">
+                    <label class="labels" for="{{ form.date_of_birth.id_for_label }}">Date of Birth:</label>
+                    <div class="input">
+                        {{ form.date_of_birth }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="labels" for="{{ form.date_of_collection.id_for_label }}">Date of Collection:</label>
+                    <div class="input">
+                        {{ form.date_of_collection }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="labels" for="{{ form.time_of_collection.id_for_label }}">Time of Collection:</label>
+                    <div class="input">
+                        {{ form.time_collected }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="labels" for="{{ form.processing_start_time.id_for_label }}">Processing Start Time:</label>
+                    <div class="input">
+                        {{ form.processing_start_time }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="labels" for="{{ form.time_placed_freezer.id_for_label }}">Time Placed in Freezer:</label>
+                    <div class="input">
+                        {{ form.time_placed_freezer }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="labels" for="{{ form.collected_by.id_for_label }}">Collected By:</label>
+                    <div class="input">
+                        {{ form.collected_by }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="labels" for="{{ form.visit_type.id_for_label }}">Visit Type:</label>
+                    <div class="input">
+                        {{ form.visit_type }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="labels" for="{{ form.comments.id_for_label }}">Comments:</label>
+                    <div class="input">
+                        {{ form.comments }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="labels" for="{{ form.ideal_participant_num.id_for_label }}">Ideal Participant Number:</label>
+                    <div class="input">
+                        {{ form.ideal_participant_num }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="labels" for="{{ form.freezer_box_num.id_for_label }}">Freezer Box Number:</label>
+                    <div class="input">
+                        {{ form.freezer_box_num }}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-footer">
+                <button type="submit" class="btn-green">Submit</button>
+            </div>
+        </form>
+        <hr />
+      
+        <form action="/submit" method="post">
+            <div class="form-grid">
+                <div class="form-grid form-grid-heading !grid-cols-6">
+                    <div>Plasma Volume</div>
+                    <div>Plasma Barcode</div>
+                    <div>RBC Volume</div>
+                    <div>RBC Barcode</div>
+                    <div>Leukocytes Volume</div>
+                    <div>Leukocytes Barcode</div>
+                </div>
+                <div class="form-grid !grid-cols-6">
+                    <div class="field">
+                        <div class="input">
+                            <select name="plasma_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="plasma_barcode" placeholder="Enter Barcode"></div></div>
+                    <div class="field">
+                        <div class="input">
+                            <select name="rbc_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="rbc_barcode" placeholder="Enter Barcode"></div></div>
+                    <div class="field">
+                        <div class="input">
+                            <select name="leukocytes_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="leukocytes_barcode" placeholder="Enter Barcode"></div></div>
+                </div>
+                <div class="form-grid !grid-cols-6">
+                    <div class="field">
+                        <div class="input">
+                            <select name="plasma_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="plasma_barcode" placeholder="Enter Barcode"></div></div>
+                    <div class="field">
+                        <div class="input">
+                            <select name="rbc_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="rbc_barcode" placeholder="Enter Barcode"></div></div>
+                    <div class="field">
+                        <div class="input">
+                            <select name="leukocytes_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="leukocytes_barcode" placeholder="Enter Barcode"></div></div>
+                </div>
+                <div class="form-grid !grid-cols-6">
+                    <div class="field">
+                        <div class="input">
+                            <select name="plasma_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="plasma_barcode" placeholder="Enter Barcode"></div></div>
+                    <div class="field">
+                        <div class="input">
+                            <select name="rbc_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="rbc_barcode" placeholder="Enter Barcode"></div></div>
+                    <div class="field">
+                        <div class="input">
+                            <select name="leukocytes_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="leukocytes_barcode" placeholder="Enter Barcode"></div></div>
+                </div>
+                <div class="form-grid !grid-cols-6">
+                    <div class="field">
+                        <div class="input">
+                            <select name="plasma_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="plasma_barcode" placeholder="Enter Barcode"></div></div>
+                    <div class="field">
+                        <div class="input">
+                            <select name="rbc_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="rbc_barcode" placeholder="Enter Barcode"></div></div>
+                    <div class="field">
+                        <div class="input">
+                            <select name="leukocytes_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="leukocytes_barcode" placeholder="Enter Barcode"></div></div>
+                </div>
+                <div class="form-grid !grid-cols-6">
+                    <div class="field">
+                        <div class="input">
+                            <select name="plasma_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="plasma_barcode" placeholder="Enter Barcode"></div></div>
+                    <div class="field">
+                        <div class="input">
+                            <select name="rbc_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="rbc_barcode" placeholder="Enter Barcode"></div></div>
+                    <div class="field">
+                        <div class="input">
+                            <select name="leukocytes_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="leukocytes_barcode" placeholder="Enter Barcode"></div></div>
+                </div>
+                <div class="form-grid !grid-cols-6">
+                    <div class="field">
+                        <div class="input">
+                            <select name="plasma_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="plasma_barcode" placeholder="Enter Barcode"></div></div>
+                    <div class="field">
+                        <div class="input">
+                            <select name="rbc_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="rbc_barcode" placeholder="Enter Barcode"></div></div>
+                    <div class="field">
+                        <div class="input">
+                            <select name="leukocytes_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="leukocytes_barcode" placeholder="Enter Barcode"></div></div>
+                </div>
+                <div class="form-grid !grid-cols-6">
+                    <div class="field">
+                        <div class="input">
+                            <select name="plasma_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="plasma_barcode" placeholder="Enter Barcode"></div></div>
+                    <div class="field">
+                        <div class="input">
+                            <select name="rbc_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="rbc_barcode" placeholder="Enter Barcode"></div></div>
+                    <div class="field">
+                        <div class="input">
+                            <select name="leukocytes_volume">
+                                <option value="0.5">0.5mL</option>
+                                <option value="1.0">1.0mL</option>
+                                <option value="1.5">>1.5mL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field"><div class="input"><input type="text" name="leukocytes_barcode" placeholder="Enter Barcode"></div></div>
+                </div>                                                                                                
+            </div>  
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+
